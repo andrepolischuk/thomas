@@ -1,31 +1,34 @@
 'use strict'
 const morph = require('nanomorph')
-const createData = require('dact')
 const {ipcRenderer} = require('electron')
 const main = require('./main')
-const {initial, start, stop} = require('./timer')
+const notify = require('./utils/notify')
+const {initial} = require('./timer')
 
-const data = createData(initial)
 const root = document.getElementById('root')
-let tree = root.appendChild(main(data))
+let tree = root.appendChild(main(initial))
 
-data.subscribe(() => {
-  tree = morph(tree, main(data))
+ipcRenderer.on('render', (event, state) => {
+  tree = morph(tree, main(state))
 })
 
-data.subscribe('timerType', () => {
-  const {timerType} = data.state
+ipcRenderer.on('notify', (event, title, body, action) => {
+  const notification = notify(title, body)
 
-  ipcRenderer.send('updateTrayIcon', timerType || '')
+  if (action) {
+    notification.then(() => {
+      event.sender.send(action)
+    })
+  }
 })
 
 document.addEventListener('keydown', event => {
   if (event.key === 's') {
-    data.emit(start)
+    ipcRenderer.send('startTimer')
   }
 
   if (event.key === 'S') {
-    data.emit(stop)
+    ipcRenderer.send('stopTimer')
   }
 
   if (event.key === 'Escape') {
