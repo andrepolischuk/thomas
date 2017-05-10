@@ -36,6 +36,7 @@
   "dependencies": {
     "bel": "^4.6.1",
     "dact": "^0.3.2",
+    "dact-electron": "^0.1.0",
     "electron-config": "^0.2.1",
     "electron-debug": "^1.0.1",
     "menubar": "^5.2.3",

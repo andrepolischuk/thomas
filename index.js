@@ -1,34 +1,40 @@
 'use strict'
 const morph = require('nanomorph')
+const createData = require('dact')
+const sync = require('dact-electron')
 const {ipcRenderer} = require('electron')
 const main = require('./main')
 const notify = require('./utils/notify')
-const {initial} = require('./timer')
+const breakTip = require('./utils/breakTip')
+const {initial, start, stop} = require('./timer')
 
+const data = createData(initial, sync(ipcRenderer))
 const root = document.getElementById('root')
-let tree = root.appendChild(main(initial))
+let tree = root.appendChild(main(data.state, data.emit))
 
-ipcRenderer.on('render', (event, state) => {
-  tree = morph(tree, main(state))
-})
+data.subscribe(() => {
+  const {timerType, remainingTime} = data.state
 
-ipcRenderer.on('notify', (event, title, body, action) => {
-  const notification = notify(title, body)
+  if (timerType === 'work' && remainingTime <= 0) {
+    notify('Done', `Break for a 5 minutes. ${breakTip()}.`)
+  }
 
-  if (action) {
-    notification.then(() => {
-      event.sender.send(action)
+  if (timerType === 'break' && remainingTime <= 0) {
+    notify('All done', 'Click for start next interval.').then(() => {
+      data.emit(start)
     })
   }
+
+  tree = morph(tree, main(data.state, data.emit))
 })
 
 document.addEventListener('keydown', event => {
   if (event.key === 's') {
-    ipcRenderer.send('startTimer')
+    data.emit(start)
   }
 
   if (event.key === 'S') {
-    ipcRenderer.send('stopTimer')
+    data.emit(stop)
   }
 
   if (event.key === 'Escape') {
