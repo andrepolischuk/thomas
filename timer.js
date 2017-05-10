@@ -1,7 +1,7 @@
 'use strict'
-const TIMEOUT = 1000
-const WORK_INTERVAL = 25 * 60 * 1000
-const BREAK_INTERVAL = 5 * 60 * 1000
+const delayInterval = 1000
+const workInterval = 25 * 60 * 1000
+const breakInterval = 5 * 60 * 1000
 
 const initial = {
   timerType: null,
@@ -15,18 +15,18 @@ exports.initial = initial
 exports.start = function start () {
   return {
     timerType: 'work',
-    timeout: TIMEOUT,
+    timeout: delayInterval,
     prevTime: Date.now(),
-    remainingTime: WORK_INTERVAL
+    remainingTime: workInterval
   }
 }
 
 exports.startBreak = function startBreak () {
   return {
     timerType: 'break',
-    timeout: TIMEOUT,
+    timeout: delayInterval,
     prevTime: Date.now(),
-    remainingTime: BREAK_INTERVAL
+    remainingTime: breakInterval
   }
 }
 
@@ -38,10 +38,10 @@ exports.tick = function tick ({state}) {
   const currentTime = Date.now()
   const diff = state.prevTime ? (currentTime - state.prevTime) : 0
 
-  let timeout = TIMEOUT - (diff % TIMEOUT)
+  let timeout = delayInterval - (diff % delayInterval)
 
-  if (timeout < (TIMEOUT / 2.0)) {
-    timeout += TIMEOUT
+  if (timeout < (delayInterval / 2.0)) {
+    timeout += delayInterval
   }
 
   const remainingTime = Math.max(state.remainingTime - diff, 0)
