@@ -2,6 +2,7 @@
 const menubar = require('menubar')
 const createData = require('dact')
 const {globalShortcut, ipcMain} = require('electron')
+const breakTip = require('./utils/breakTip')
 const {initial, start, startBreak, tick, stop} = require('./timer')
 
 require('electron-debug')()
@@ -47,7 +48,7 @@ data.subscribe(() => {
       data.emit(startBreak)
     }, timeout)
 
-    app.window.webContents.send('notify', 'Done', 'Break for a 5 minutes')
+    app.window.webContents.send('notify', 'Done', `Break for a 5 minutes. ${breakTip()}.`)
   }
 
   if (timerType === 'break' && remainingTime <= 0) {
@@ -55,7 +56,7 @@ data.subscribe(() => {
       data.emit(stop)
     }, timeout)
 
-    app.window.webContents.send('notify', 'All done', 'Click for start next interval', 'startTimer')
+    app.window.webContents.send('notify', 'All done', 'Click for start next interval.', 'startTimer')
   }
 
   app.window.webContents.send('render', data.state)
