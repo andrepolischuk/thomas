@@ -2,6 +2,8 @@
 
 > Simple pomodoro timer
 
+![](media/screenshot.png)
+
 ## Install
 
 ```sh
