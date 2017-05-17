@@ -1,9 +1,10 @@
 'use strict'
 const menubar = require('menubar')
-const createData = require('dact')
-const sync = require('dact-electron')
+const syncData = require('dact-electron')
 const {globalShortcut, ipcMain} = require('electron')
-const {initial, startBreak, tick, stop} = require('./timer')
+const createData = require('./modules/createData')
+const {config, pullConfig} = require('./modules/config')
+const {startBreak, tick, stop} = require('./modules/timer')
 
 require('electron-debug')()
 
@@ -15,10 +16,11 @@ const app = menubar({
 })
 
 app.on('ready', () => {
-  const data = createData(initial, sync(ipcMain, app.window))
+  let prevTimerType
+  const data = createData(syncData(ipcMain, app.window))
 
-  data.subscribe(() => {
-    const {timerType, timeout, remainingTime} = data.state
+  data.subscribe('timer', () => {
+    const {timerType, timeout, remainingTime} = data.state.timer
 
     if (timerType && remainingTime > 0) {
       setTimeout(() => {
@@ -37,13 +39,20 @@ app.on('ready', () => {
         data.emit(stop)
       }, timeout)
     }
+
+    if (prevTimerType !== timerType) {
+      const iconPath = `${__dirname}/assets/tray${timerType.replace(/^\w/, m => m.toUpperCase())}Icon.png`
+      prevTimerType = timerType
+      app.tray.setImage(iconPath)
+    }
   })
 
-  data.subscribe('timerType', () => {
-    const timerType = data.state.timerType || ''
-    const icon = `${__dirname}/assets/tray${timerType.replace(/^\w/, m => m.toUpperCase())}Icon.png`
+  data.subscribe('config', () => {
+    config.set(data.state.config)
+  })
 
-    app.tray.setImage(icon)
+  app.window.on('show', () => {
+    data.emit(pullConfig)
   })
 
   globalShortcut.register('CommandOrControl+Alt+T', () => {
