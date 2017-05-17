@@ -96,13 +96,15 @@ h2 {
 }
 
 .input-timer {
+  box-sizing: border-box;
   border: 1px solid transparent;
   border-radius: 3px;
   outline: 0;
   margin: 0;
   padding: 0;
-  width: 75px;
-  background-color: transparent;
+  padding-left: 20px;
+  width: 100px;
+  background-color: #fafafa;
   font-size: 3rem;
   font-weight: 300;
   text-align: center;
