@@ -14,8 +14,8 @@ const appConfig = new Config({
 
 exports.config = appConfig
 
-exports.pullConfig = function pullConfig ({state}) {
+exports.setConfig = function setConfig (config, {state}) {
   return {
-    config: Object.assign({}, state.config, appConfig.store)
+    config: Object.assign({}, state.config, config)
   }
 }

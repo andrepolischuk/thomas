@@ -3,7 +3,7 @@ const menubar = require('menubar')
 const syncData = require('dact-electron')
 const {globalShortcut, ipcMain} = require('electron')
 const createData = require('./modules/createData')
-const {config, pullConfig} = require('./modules/config')
+const {config, setConfig} = require('./modules/config')
 const {startBreak, tick, stop} = require('./modules/timer')
 
 require('electron-debug')()
@@ -52,7 +52,7 @@ app.on('ready', () => {
   })
 
   app.window.on('show', () => {
-    data.emit(pullConfig)
+    data.emit(setConfig, config.store)
   })
 
   globalShortcut.register('CommandOrControl+Alt+T', () => {

@@ -27,11 +27,13 @@ body {
 main {
   display: table-cell;
   vertical-align: middle;
-  padding: 50px;
+  padding: 50px 25px;
   text-align: center;
 }
 
 h1 {
+  display: flex;
+  justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-size: 3rem;
@@ -58,4 +60,22 @@ button[type="submit"] {
 button[type="reset"] {
   background-color: #e45649;
   color: #fafafa;
+}
+
+input[type="number"] {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  width: 75px;
+  background-color: transparent;
+  font-size: 3rem;
+  font-weight: 300;
+  text-align: center;
+  transition: border 100ms;
+}
+
+input[type="number"]:focus {
+  border-color: #4078f2;
 }
