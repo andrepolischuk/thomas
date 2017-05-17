@@ -15,7 +15,7 @@ const menu = menubar({
   icon: `${__dirname}/assets/trayIcon.png`
 })
 
-menu.on('ready', () => {
+menu.on('after-create-window', () => {
   let prevTimerType
   const data = createData(syncData(ipcMain, menu.window))
 
@@ -51,17 +51,21 @@ menu.on('ready', () => {
     config.set(data.state.config)
   })
 
-  menu.window.on('show', () => {
+  globalShortcut.register('CommandOrControl+Alt+T', () => {
+    menu.showWindow()
+  })
+
+  menu.on('show', () => {
     data.emit(setConfig, config.store)
   })
 
-  globalShortcut.register('CommandOrControl+Alt+T', () => {
-    menu.showWindow()
+  menu.on('after-hide', () => {
+    menu.app.hide()
   })
 })
 
 ipcMain.on('hideWindow', () => {
-  menu.app.hide()
+  menu.hideWindow()
 })
 
 ipcMain.on('quit', () => {
