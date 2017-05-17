@@ -8,16 +8,16 @@ const {startBreak, tick, stop} = require('./modules/timer')
 
 require('electron-debug')()
 
-const app = menubar({
+const menu = menubar({
   preloadWindow: true,
   width: 300,
   height: 300,
   icon: `${__dirname}/assets/trayIcon.png`
 })
 
-app.on('ready', () => {
+menu.on('ready', () => {
   let prevTimerType
-  const data = createData(syncData(ipcMain, app.window))
+  const data = createData(syncData(ipcMain, menu.window))
 
   data.subscribe('timer', () => {
     const {timerType, timeout, remainingTime} = data.state.timer
@@ -43,7 +43,7 @@ app.on('ready', () => {
     if (prevTimerType !== timerType) {
       const iconPath = `${__dirname}/assets/tray${timerType.replace(/^\w/, m => m.toUpperCase())}Icon.png`
       prevTimerType = timerType
-      app.tray.setImage(iconPath)
+      menu.tray.setImage(iconPath)
     }
   })
 
@@ -51,15 +51,19 @@ app.on('ready', () => {
     config.set(data.state.config)
   })
 
-  app.window.on('show', () => {
+  menu.window.on('show', () => {
     data.emit(setConfig, config.store)
   })
 
   globalShortcut.register('CommandOrControl+Alt+T', () => {
-    app.showWindow()
+    menu.showWindow()
   })
 })
 
 ipcMain.on('hideWindow', () => {
-  app.app.hide()
+  menu.app.hide()
+})
+
+ipcMain.on('quit', () => {
+  menu.app.quit()
 })

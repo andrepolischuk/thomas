@@ -8,9 +8,10 @@ module.exports = function init (state, emit) {
 
   return html`
     <article>
-      <span>new interval</span>
-      <h1>
+      <h2>new interval</h2>
+      <div class="timer">
         <input
+          class="input input-timer"
           type="number"
           value="${interval}"
           onchange=${event => emit(setConfig, {
@@ -18,13 +19,14 @@ module.exports = function init (state, emit) {
           })} />
         →
         <input
+          class="input input-timer"
           type="number"
           value="${breakInterval}"
           onchange=${event => emit(setConfig, {
             breakInterval: event.target.value
           })} />
-      </h1>
-      <button type="submit" onclick=${() => emit(start)}>
+      </div>
+      <button class="button button-submit" onclick=${() => emit(start)}>
         Start
       </button>
     </article>

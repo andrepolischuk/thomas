@@ -31,7 +31,62 @@ main {
   text-align: center;
 }
 
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+}
+
 h1 {
+  margin: 0;
+  padding: 0;
+  color: #a0a1a7;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+h2 {
+  margin: 0;
+  padding: 0;
+  color: #696c77;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.button {
+  outline: 0;
+  border: 0;
+  border-radius: 3px;
+  padding: 0 15px;
+  height: 40px;
+  background-color: #fafafa;
+  color: #383a42;
+  font-size: 1rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.button-submit {
+  background-color: #50a14f;
+  color: #fafafa;
+}
+
+.button-reset {
+  background-color: #e45649;
+  color: #fafafa;
+}
+
+.button-small {
+  padding: 0 4px;
+  height: 18px;
+  font-size: 0.7rem;
+}
+
+.timer {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
@@ -40,29 +95,7 @@ h1 {
   font-weight: 300;
 }
 
-button {
-  outline: 0;
-  border: 0;
-  border-radius: 3px;
-  padding: 10px 15px;
-  background-color: #fafafa;
-  color: #383a42;
-  font-size: 1rem;
-  font-weight: 300;
-  letter-spacing: 1px;
-}
-
-button[type="submit"] {
-  background-color: #50a14f;
-  color: #fafafa;
-}
-
-button[type="reset"] {
-  background-color: #e45649;
-  color: #fafafa;
-}
-
-input[type="number"] {
+.input-timer {
   border: 1px solid transparent;
   border-radius: 3px;
   outline: 0;
@@ -76,6 +109,6 @@ input[type="number"] {
   transition: border 100ms;
 }
 
-input[type="number"]:focus {
+.input-timer:focus {
   border-color: #4078f2;
 }

@@ -8,9 +8,11 @@ module.exports = function timer (state, emit) {
 
   return html`
     <article>
-      <span>${timerType}</span>
-      <h1>${formatMs(remainingTime)}</h1>
-      <button type="reset" onclick=${() => emit(stop)}>
+      <h2>${timerType}</h2>
+      <div class="timer">
+        ${formatMs(remainingTime)}
+      </div>
+      <button class="button button-reset" onclick=${() => emit(stop)}>
         Stop
       </button>
     </article>
