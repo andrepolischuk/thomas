@@ -13,10 +13,11 @@ const root = document.getElementById('root')
 let tree = root.appendChild(main(data.state, data.emit))
 
 data.subscribe(() => {
-  const {timerType, remainingTime} = data.state
+  const {breakInterval} = data.state.config
+  const {timerType, remainingTime} = data.state.timer
 
   if (timerType === 'work' && remainingTime <= 0) {
-    notify('Done', `Break for a 5 minutes. ${breakTip()}.`)
+    notify('Done', `Break for a ${breakInterval} minutes. ${breakTip()}.`)
   }
 
   if (timerType === 'break' && remainingTime <= 0) {
