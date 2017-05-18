@@ -59,9 +59,11 @@ menu.on('after-create-window', () => {
     data.emit(setConfig, config.store)
   })
 
-  menu.on('after-hide', () => {
-    menu.app.hide()
-  })
+  if (process.platform === 'darwin') {
+    menu.on('after-hide', () => {
+      menu.app.hide()
+    })
+  }
 })
 
 ipcMain.on('hideWindow', () => {
