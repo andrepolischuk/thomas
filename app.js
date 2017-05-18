@@ -2,9 +2,10 @@
 const menubar = require('menubar')
 const syncData = require('dact-electron')
 const {globalShortcut, ipcMain} = require('electron')
+const trayIcon = require('./utils/trayIcon')
 const createData = require('./modules/createData')
 const {config, setConfig} = require('./modules/config')
-const {startBreak, tick, stop} = require('./modules/timer')
+const {startBreak, tick, finish} = require('./modules/timer')
 
 require('electron-debug')()
 
@@ -12,38 +13,39 @@ const menu = menubar({
   preloadWindow: true,
   width: 300,
   height: 300,
-  icon: `${__dirname}/assets/trayIcon.png`
+  icon: trayIcon()
 })
 
 menu.on('after-create-window', () => {
-  let prevTimerType
   const data = createData(syncData(ipcMain, menu.window))
+  let prevStage
 
   data.subscribe('timer', () => {
-    const {timerType, timeout, remainingTime} = data.state.timer
+    const {stage, timeout, remainingTime} = data.state.timer
 
-    if (timerType && remainingTime > 0) {
+    if (stage && remainingTime > 0) {
       setTimeout(() => {
         data.emit(tick)
       }, timeout)
     }
 
-    if (timerType === 'work' && remainingTime <= 0) {
+    if (stage === 'work' && remainingTime <= 0) {
       setTimeout(() => {
         data.emit(startBreak)
+        menu.showWindow()
       }, timeout)
     }
 
-    if (timerType === 'break' && remainingTime <= 0) {
+    if (stage === 'break' && remainingTime <= 0) {
       setTimeout(() => {
-        data.emit(stop)
+        data.emit(finish)
+        menu.showWindow()
       }, timeout)
     }
 
-    if (prevTimerType !== timerType) {
-      const iconPath = `${__dirname}/assets/tray${timerType.replace(/^\w/, m => m.toUpperCase())}Icon.png`
-      prevTimerType = timerType
-      menu.tray.setImage(iconPath)
+    if (prevStage !== stage) {
+      prevStage = stage
+      menu.tray.setImage(trayIcon(stage))
     }
   })
 

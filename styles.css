@@ -18,16 +18,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-#root {
-  display: table;
-  width: 100%;
-  height: 100%;
-}
-
 main {
-  display: table-cell;
-  vertical-align: middle;
+  box-sizing: border-box;
   padding: 50px 25px;
+  height: 100%;
   text-align: center;
 }
 
@@ -49,18 +43,58 @@ h1 {
   font-weight: 400;
 }
 
+article {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
 h2 {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
   margin: 0;
   padding: 0;
+  height: 3rem;
   color: #696c77;
   font-size: 1rem;
   font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.input-timer {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  outline: 0;
+  margin: 0;
+  padding: 0 0 0 20px;
+  width: 100px;
+  background-color: #fafafa;
+  font-size: 3rem;
+  font-weight: 300;
+  text-align: center;
+  transition: border 100ms;
+}
+
+.input-timer:focus {
+  border-color: #4078f2;
 }
 
 .button {
   outline: 0;
   border: 0;
   border-radius: 3px;
+  margin: 0;
   padding: 0 15px;
   height: 40px;
   background-color: #fafafa;
@@ -68,6 +102,10 @@ h2 {
   font-size: 1rem;
   font-weight: 300;
   letter-spacing: 1px;
+}
+
+.button + .button {
+  margin-left: 15px;
 }
 
 .button-submit {
@@ -84,33 +122,4 @@ h2 {
   padding: 0 4px;
   height: 18px;
   font-size: 0.7rem;
-}
-
-.timer {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  font-size: 3rem;
-  font-weight: 300;
-}
-
-.input-timer {
-  box-sizing: border-box;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  outline: 0;
-  margin: 0;
-  padding: 0;
-  padding-left: 20px;
-  width: 100px;
-  background-color: #fafafa;
-  font-size: 3rem;
-  font-weight: 300;
-  text-align: center;
-  transition: border 100ms;
-}
-
-.input-timer:focus {
-  border-color: #4078f2;
 }

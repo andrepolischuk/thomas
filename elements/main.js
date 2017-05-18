@@ -3,13 +3,21 @@ const html = require('bel')
 const {ipcRenderer} = require('electron')
 const init = require('./init')
 const timer = require('./timer')
+const finish = require('./finish')
+
+const elements = {
+  init,
+  finish,
+  work: timer,
+  break: timer
+}
 
 function quit () {
   ipcRenderer.send('quit')
 }
 
 module.exports = function main (state, emit) {
-  const component = state.timer.timerType ? timer : init
+  const element = elements[state.timer.stage || 'init']
 
   return html`
     <main>
@@ -17,7 +25,7 @@ module.exports = function main (state, emit) {
         <h1>Tom</h1>
         <button class="button button-small" onclick=${quit}>✕</button>
       </header>
-      ${component(state, emit)}
+      ${element(state, emit)}
     </main>
   `
 }

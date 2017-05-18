@@ -1,25 +1,29 @@
 'use strict'
+const breakTip = require('../utils/breakTip')
+
 const delay = 1000
 
 exports.start = function start ({state}) {
   return {
     timer: {
-      timerType: 'work',
+      stage: 'work',
       timeout: delay,
       prevTime: Date.now(),
       remainingTime: state.config.interval * 60 * 1000
-    }
+    },
+    message: 'Work'
   }
 }
 
 exports.startBreak = function startBreak ({state}) {
   return {
     timer: {
-      timerType: 'break',
+      stage: 'break',
       timeout: delay,
       prevTime: Date.now(),
       remainingTime: state.config.breakInterval * 60 * 1000
-    }
+    },
+    message: `Done. Break for a ${state.config.breakInterval} minutes. ${breakTip()}.`
   }
 }
 
@@ -44,15 +48,25 @@ exports.tick = function tick ({state}) {
       timeout,
       remainingTime,
       prevTime: currentTime,
-      timerType: state.timer.timerType
+      stage: state.timer.stage
     }
+  }
+}
+
+exports.finish = function finish () {
+  return {
+    timer: {
+      stage: 'finish'
+    },
+    message: null
   }
 }
 
 exports.stop = function stop () {
   return {
     timer: {
-      timerType: ''
-    }
+      stage: ''
+    },
+    message: null
   }
 }

@@ -5,9 +5,10 @@ const {config} = require('./config')
 module.exports = function createDataWithMiddlewares (...middlewares) {
   const initialState = {
     timer: {
-      timerType: ''
+      stage: ''
     },
-    config: config.store
+    config: config.store,
+    message: null
   }
 
   return createData(initialState, ...middlewares)
