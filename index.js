@@ -20,16 +20,8 @@ data.subscribe('log', () => {
 })
 
 document.addEventListener('keydown', event => {
-  if (event.target.tagName === 'INPUT') {
-    return
-  }
-
-  if (event.key === 's') {
-    data.emit(start)
-  }
-
-  if (event.key === 'S') {
-    data.emit(stop)
+  if (event.key === 'Enter') {
+    data.emit(data.state.timer.remainingTime > 0 ? stop : start)
   }
 
   if (event.key === 'Escape') {

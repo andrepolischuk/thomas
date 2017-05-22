@@ -15,7 +15,7 @@ npm install
 ## Shortcuts
 
 * `CommandOrControl+Alt+T` — show application *(global)*
-* `s`/`S` — start/stop timer
+* `Enter` — start/stop timer
 * `Escape` — hide application
 
 ## Run
