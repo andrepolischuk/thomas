@@ -25,6 +25,16 @@ main {
   text-align: center;
 }
 
+main::after {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10px;
+  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
+  content: "";
+}
+
 main > header {
   position: fixed;
   top: 0;
@@ -34,6 +44,7 @@ main > header {
   justify-content: space-between;
   align-items: center;
   padding: 15px;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 80%, transparent);
   line-height: 1rem;
 }
 
