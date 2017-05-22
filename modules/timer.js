@@ -5,35 +5,30 @@ const delay = 1000
 
 exports.setTitle = function setTitle (title, {state}) {
   return {
-    timer: {
-      title,
-      stage: state.timer.stage
-    }
+    timer: Object.assign({}, state.timer, {title})
   }
 }
 
 exports.start = function start ({state}) {
   return {
-    timer: {
+    timer: Object.assign({}, state.timer, {
       stage: 'work',
       timeout: delay,
       prevTime: Date.now(),
-      title: state.timer.title,
       remainingTime: state.config.interval * 60 * 1000
-    },
+    }),
     message: 'Work'
   }
 }
 
 exports.startBreak = function startBreak ({state}) {
   return {
-    timer: {
+    timer: Object.assign({}, state.timer, {
       stage: 'break',
       timeout: delay,
       prevTime: Date.now(),
-      title: state.timer.title,
       remainingTime: state.config.breakInterval * 60 * 1000
-    },
+    }),
     message: `Done. Break for a ${state.config.breakInterval} minutes. ${breakTip()}.`
   }
 }
@@ -55,13 +50,11 @@ exports.tick = function tick ({state}) {
   const remainingTime = Math.max(state.timer.remainingTime - diff, 0)
 
   return {
-    timer: {
+    timer: Object.assign({}, state.timer, {
       timeout,
       remainingTime,
-      prevTime: currentTime,
-      title: state.timer.title,
-      stage: state.timer.stage
-    }
+      prevTime: currentTime
+    })
   }
 }
 
