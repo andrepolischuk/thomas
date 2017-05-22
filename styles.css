@@ -4,7 +4,7 @@ html {
 
 html,
 body {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -21,18 +21,26 @@ body {
 main {
   box-sizing: border-box;
   padding: 50px 25px;
-  height: 100%;
+  min-height: 100%;
   text-align: center;
 }
 
-header {
+main > header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
+  line-height: 1rem;
+}
+
+main > article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 h1 {
@@ -43,18 +51,11 @@ h1 {
   font-weight: 400;
 }
 
-article {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  height: 100%;
-}
-
 h2 {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin: 0;
+  margin: 0 0 1rem;
   padding: 0;
   height: 3rem;
   color: #696c77;
@@ -64,6 +65,35 @@ h2 {
   text-overflow: ellipsis;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  list-style: none;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1rem;
+  white-space: nowrap;
+}
+
+li[disabled] {
+  color: #a0a1a7;
+}
+
+li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+footer {
+  margin-top: 1rem;
+}
+
 .timer {
   display: flex;
   justify-content: center;
@@ -71,23 +101,36 @@ h2 {
   font-weight: 300;
 }
 
-.input-timer {
+.input {
   box-sizing: border-box;
   border: 1px solid transparent;
   border-radius: 3px;
   outline: 0;
   margin: 0;
-  padding: 0 0 0 20px;
+  padding: 0;
+  height: 1.5rem;
+  background-color: transparent;
+  font-size: 1rem;
+  text-align: center;
+  transition: border 100ms, background 100ms;
+}
+
+.input:hover,
+.input:focus {
+  background-color: #fafafa;
+}
+
+.input:focus {
+  border-color: #4078f2;
+}
+
+.input-timer {
+  padding-left: 20px;
   width: 100px;
+  height: auto;
   background-color: #fafafa;
   font-size: 3rem;
   font-weight: 300;
-  text-align: center;
-  transition: border 100ms;
-}
-
-.input-timer:focus {
-  border-color: #4078f2;
 }
 
 .button {
@@ -122,4 +165,6 @@ h2 {
   padding: 0 4px;
   height: 18px;
   font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0;
 }

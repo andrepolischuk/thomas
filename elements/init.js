@@ -1,14 +1,22 @@
 'use strict'
 const html = require('bel')
-const {start} = require('../modules/timer')
 const {setConfig} = require('../modules/config')
+const {start, setTitle} = require('../modules/timer')
 
 module.exports = function init (state, emit) {
+  const {title} = state.timer
   const {interval, breakInterval} = state.config
 
   return html`
     <article>
-      <h2>New interval</h2>
+      <h2>
+        <input
+          class="input input-title"
+          type="text"
+          value="${title}"
+          placeholder="Type title..."
+          onchange=${event => emit(setTitle, event.target.value)}/>
+      </h2>
       <div class="timer">
         <input
           class="input input-timer"
