@@ -20,11 +20,13 @@ data.subscribe('log', () => {
 })
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Enter') {
+  const {startTimer, hideWindow} = data.state.config.shortcuts
+
+  if (event.key === startTimer) {
     data.emit(data.state.timer.remainingTime > 0 ? stop : start)
   }
 
-  if (event.key === 'Escape') {
+  if (event.key === hideWindow) {
     ipcRenderer.send('hideWindow')
   }
 })

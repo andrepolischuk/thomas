@@ -7,7 +7,12 @@ const configDir = homedir()
 const appConfig = new Config({
   defaults: {
     interval: 25,
-    breakInterval: 5
+    breakInterval: 5,
+    shortcuts: {
+      showWindow: 'CommandOrControl+Alt+T',
+      startTimer: 'Enter',
+      hideWindow: 'Escape'
+    }
   },
   name: `${configDir}/.tom`
 })

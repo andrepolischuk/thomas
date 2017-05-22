@@ -18,6 +18,7 @@ const menu = menubar({
 
 menu.on('after-create-window', () => {
   const data = createData(syncData(ipcMain, menu.window))
+  const {shortcuts} = data.state.config
   let prevStage
 
   data.subscribe('timer', () => {
@@ -53,10 +54,6 @@ menu.on('after-create-window', () => {
     config.set(data.state.config)
   })
 
-  globalShortcut.register('CommandOrControl+Alt+T', () => {
-    menu.showWindow()
-  })
-
   menu.on('show', () => {
     data.emit(setConfig, config.store)
   })
@@ -64,6 +61,12 @@ menu.on('after-create-window', () => {
   if (process.platform === 'darwin') {
     menu.on('after-hide', () => {
       menu.app.hide()
+    })
+  }
+
+  if (shortcuts.showWindow) {
+    globalShortcut.register(shortcuts.showWindow, () => {
+      menu.showWindow()
     })
   }
 })
