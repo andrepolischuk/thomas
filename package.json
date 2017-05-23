@@ -34,13 +34,13 @@
   },
   "homepage": "https://github.com/andrepolischuk/tom",
   "dependencies": {
-    "bel": "^4.6.1",
+    "bel": "^5.0.0",
     "dact": "^0.3.2",
     "dact-electron": "^0.1.0",
-    "electron-config": "^0.2.1",
+    "electron-config": "^1.0.0",
     "electron-debug": "^1.0.1",
     "menubar": "^5.2.3",
-    "nanomorph": "^4.0.5"
+    "nanomorph": "^5.0.0"
   },
   "devDependencies": {
     "electron": "^1.6.6",
