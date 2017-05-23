@@ -6,8 +6,8 @@ const configDir = homedir()
 
 const appConfig = new Config({
   defaults: {
-    interval: 25,
-    breakInterval: 5,
+    duration: 25,
+    breakDuration: 5,
     shortcuts: {
       showWindow: 'CommandOrControl+Alt+T',
       startTimer: 'Enter',

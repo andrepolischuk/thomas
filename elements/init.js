@@ -5,7 +5,7 @@ const {start, setTitle} = require('../modules/timer')
 
 module.exports = function init (state, emit) {
   const {title} = state.timer
-  const {interval, breakInterval} = state.config
+  const {duration, breakDuration} = state.config
 
   return html`
     <article>
@@ -21,17 +21,17 @@ module.exports = function init (state, emit) {
         <input
           class="input input-timer"
           type="number"
-          value="${interval}"
+          value="${duration}"
           onchange=${event => emit(setConfig, {
-            interval: event.target.value
+            duration: event.target.value
           })} />
         →
         <input
           class="input input-timer"
           type="number"
-          value="${breakInterval}"
+          value="${breakDuration}"
           onchange=${event => emit(setConfig, {
-            breakInterval: event.target.value
+            breakDuration: event.target.value
           })} />
       </div>
       <footer>

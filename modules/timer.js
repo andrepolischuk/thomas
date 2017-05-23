@@ -15,7 +15,7 @@ exports.start = function start ({state}) {
       stage: 'work',
       timeout: delay,
       prevTime: Date.now(),
-      remainingTime: state.config.interval * 60 * 1000
+      remainingTime: state.config.duration * 60 * 1000
     })
   }
 }
@@ -26,9 +26,9 @@ exports.startBreak = function startBreak ({state}) {
       stage: 'break',
       timeout: delay,
       prevTime: Date.now(),
-      remainingTime: state.config.breakInterval * 60 * 1000
+      remainingTime: state.config.breakDuration * 60 * 1000
     }),
-    message: `Done. Break for a ${state.config.breakInterval} minutes. ${breakTip()}.`
+    message: `Done. Break for a ${state.config.breakDuration} minutes. ${breakTip()}.`
   }
 }
 
@@ -64,7 +64,7 @@ exports.finish = function finish ({state}) {
       title: state.timer.title
     },
     log: state.log.concat({
-      duration: state.config.interval,
+      duration: state.config.duration,
       time: Date.now(),
       title: state.timer.title
     }),
