@@ -1,22 +1,17 @@
 'use strict'
-const html = require('bel')
-const formatMs = require('../utils/formatMs')
-const {stop} = require('../modules/timer')
+const init = require('./init')
+const tick = require('./tick')
+const finish = require('./finish')
+
+const routes = {
+  init,
+  finish,
+  break: tick,
+  interval: tick
+}
 
 module.exports = function timer (state, emit) {
-  const {stage, title, remainingTime} = state.timer
+  const route = routes[state.timer.stage || 'init']
 
-  return html`
-    <article>
-      <h2>${stage === 'work' ? (title || 'Untitled') : state.message}</h2>
-      <div class="timer">
-        ${formatMs(remainingTime)}
-      </div>
-      <footer>
-        <button class="button button-reset" onclick=${() => emit(stop)}>
-          Stop
-        </button>
-      </footer>
-    </article>
-  `
+  return route(state, emit)
 }

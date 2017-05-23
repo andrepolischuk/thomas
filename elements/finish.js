@@ -1,6 +1,6 @@
 'use strict'
 const html = require('bel')
-const {start, stop} = require('../modules/timer')
+const {start, cancel} = require('../modules/timer')
 
 module.exports = function finish (state, emit) {
   return html`
@@ -10,7 +10,7 @@ module.exports = function finish (state, emit) {
         <button class="button button-submit" onclick=${() => emit(start)}>
           Restart
         </button>
-        <button class="button" onclick=${() => emit(stop)}>
+        <button class="button" onclick=${() => emit(cancel)}>
           Reset
         </button>
       </footer>

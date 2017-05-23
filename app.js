@@ -30,7 +30,7 @@ menu.on('after-create-window', () => {
       }, timeout)
     }
 
-    if (stage === 'work' && remainingTime <= 0) {
+    if (stage === 'interval' && remainingTime <= 0) {
       setTimeout(() => {
         data.emit(startBreak)
         menu.showWindow()

@@ -5,7 +5,7 @@ const {ipcRenderer} = require('electron')
 const main = require('./elements/main')
 const {writeLog} = require('./utils/log')
 const createData = require('./modules/createData')
-const {start, stop} = require('./modules/timer')
+const {start, cancel} = require('./modules/timer')
 
 const data = createData(syncData(ipcRenderer))
 const body = document.querySelector('body')
@@ -23,7 +23,7 @@ document.addEventListener('keydown', event => {
   const {startTimer, hideWindow} = data.state.config.shortcuts
 
   if (event.key === startTimer) {
-    data.emit(data.state.timer.remainingTime > 0 ? stop : start)
+    data.emit(data.state.timer.remainingTime > 0 ? cancel : start)
   }
 
   if (event.key === hideWindow) {

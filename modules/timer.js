@@ -12,7 +12,7 @@ exports.setTitle = function setTitle (title, {state}) {
 exports.start = function start ({state}) {
   return {
     timer: Object.assign({}, state.timer, {
-      stage: 'work',
+      stage: 'interval',
       timeout: delay,
       prevTime: Date.now(),
       remainingTime: state.config.duration * 60 * 1000
@@ -72,7 +72,7 @@ exports.finish = function finish ({state}) {
   }
 }
 
-exports.stop = function stop ({state}) {
+exports.cancel = function cancel ({state}) {
   return {
     timer: {
       stage: '',
