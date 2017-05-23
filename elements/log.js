@@ -11,8 +11,7 @@ module.exports = function log (state, emit) {
       <h2>Log</h2>
       <ul>
         ${state.log.reduceRight((accumulated, item) => {
-          const datetime = new Date(item.time)
-          const date = datetime.toLocaleDateString()
+          const date = new Date(item.time).toLocaleDateString()
           let titleElement
 
           if (prevDate !== date) {
@@ -26,10 +25,10 @@ module.exports = function log (state, emit) {
           }
 
           const element = html`
-            <li disabled="${!item.completed}">
+            <li>
               <span>${item.title || 'Untitled'}</span>
               <small>
-                ${datetime.toLocaleTimeString()}
+                ${item.duration ? `${item.duration}m` : 'Canceled'}
               </small>
             </li>
           `

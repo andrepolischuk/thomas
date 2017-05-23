@@ -16,8 +16,7 @@ exports.start = function start ({state}) {
       timeout: delay,
       prevTime: Date.now(),
       remainingTime: state.config.interval * 60 * 1000
-    }),
-    message: 'Work'
+    })
   }
 }
 
@@ -65,7 +64,7 @@ exports.finish = function finish ({state}) {
       title: state.timer.title
     },
     log: state.log.concat({
-      completed: true,
+      duration: state.config.interval,
       time: Date.now(),
       title: state.timer.title
     }),
@@ -80,7 +79,7 @@ exports.stop = function stop ({state}) {
       title: state.timer.title
     },
     log: state.log.concat({
-      completed: false,
+      duration: null,
       time: Date.now(),
       title: state.timer.title
     }),
