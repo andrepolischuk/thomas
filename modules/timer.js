@@ -16,7 +16,8 @@ exports.start = function start ({state}) {
       timeout: delay,
       prevTime: Date.now(),
       remainingTime: state.config.duration * 60 * 1000
-    })
+    }),
+    location: 'timer'
   }
 }
 
@@ -28,6 +29,7 @@ exports.startBreak = function startBreak ({state}) {
       prevTime: Date.now(),
       remainingTime: state.config.breakDuration * 60 * 1000
     }),
+    location: 'timer',
     message: `Done. Break for a ${state.config.breakDuration} minutes. ${breakTip()}.`
   }
 }
@@ -68,7 +70,8 @@ exports.finish = function finish ({state}) {
       time: Date.now(),
       title: state.timer.title
     }),
-    message: null
+    message: null,
+    location: 'timer'
   }
 }
 
