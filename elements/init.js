@@ -9,14 +9,14 @@ module.exports = function init (state, emit) {
 
   return html`
     <article>
-      <h2>
+      <header>
         <input
           class="input input-title"
           type="text"
           value="${title}"
           placeholder="Type title..."
           onchange=${event => emit(setTitle, event.target.value)}/>
-      </h2>
+      </header>
       <div class="timer">
         <input
           class="input input-timer"

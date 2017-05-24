@@ -5,7 +5,11 @@ const {start, cancel} = require('../modules/timer')
 module.exports = function finish (state, emit) {
   return html`
     <article>
-      <h2>Hooray. ${state.timer.title || 'All'} is done. You can start it again.</h2>
+      <header>
+        <h2>
+          Hooray. ${state.timer.title || 'All'} is done. You can start it again.
+        </h2>
+      </header>
       <footer>
         <button class="button button-submit" onclick=${() => emit(start)}>
           Restart

@@ -8,7 +8,9 @@ module.exports = function log (state, emit) {
 
   return html`
     <article>
-      <h2>Log</h2>
+      <header>
+        <h2>Log</h2>
+      </header>
       <ul>
         ${state.log.reduceRight((accumulated, item) => {
           const date = new Date(item.time).toLocaleDateString()

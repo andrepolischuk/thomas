@@ -8,7 +8,11 @@ module.exports = function timer (state, emit) {
 
   return html`
     <article>
-      <h2>${stage === 'interval' ? (title || 'Untitled') : state.message}</h2>
+      <header>
+        <h2>
+          ${stage === 'interval' ? (title || 'Untitled') : state.message}
+        </h2>
+      </header>
       <div class="timer">
         ${formatMs(remainingTime)}
       </div>
