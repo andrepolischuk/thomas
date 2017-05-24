@@ -29,7 +29,7 @@ data.subscribe('log', () => {
 document.addEventListener('keydown', event => {
   const {startTimer, hideWindow} = data.state.config.shortcuts
 
-  if (event.key === startTimer) {
+  if (event.key === startTimer && !event.target.tagName.match(/^(a|button)$/i)) {
     data.emit(data.state.timer.remainingTime > 0 ? cancel : start)
   }
 
