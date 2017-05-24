@@ -22,27 +22,25 @@ menu.on('after-create-window', () => {
   let prevStage
 
   data.subscribe('timer', () => {
-    const {stage, timeout, remainingTime} = data.state.timer
+    const {stage, timeout} = data.state.timer
 
-    if (stage && remainingTime > 0) {
-      setTimeout(() => {
+    setTimeout(() => {
+      const {remainingTime} = data.state.timer
+
+      if (stage && remainingTime > 0) {
         data.emit(tick)
-      }, timeout)
-    }
+      }
 
-    if (stage === 'interval' && remainingTime <= 0) {
-      setTimeout(() => {
+      if (stage === 'interval' && remainingTime <= 0) {
         data.emit(startBreak)
         menu.showWindow()
-      }, timeout)
-    }
+      }
 
-    if (stage === 'break' && remainingTime <= 0) {
-      setTimeout(() => {
+      if (stage === 'break' && remainingTime <= 0) {
         data.emit(finish)
         menu.showWindow()
-      }, timeout)
-    }
+      }
+    }, timeout)
 
     if (prevStage !== stage) {
       prevStage = stage
