@@ -25,7 +25,7 @@ menu.on('after-create-window', () => {
     const {stage, timeout} = data.state.timer
 
     setTimeout(() => {
-      const {remainingTime} = data.state.timer
+      const {stage, remainingTime} = data.state.timer
 
       if (stage && remainingTime > 0) {
         data.emit(tick)

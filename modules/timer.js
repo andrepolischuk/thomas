@@ -60,15 +60,17 @@ exports.tick = function tick ({state}) {
 }
 
 exports.finish = function finish ({state}) {
+  const {title} = state.timer
+
   return {
     timer: {
-      stage: 'finish',
-      title: state.timer.title
+      title,
+      stage: 'finish'
     },
     log: state.log.concat({
+      title,
       duration: state.config.duration,
-      time: Date.now(),
-      title: state.timer.title
+      time: Date.now()
     }),
     message: null,
     location: 'timer'
@@ -76,15 +78,17 @@ exports.finish = function finish ({state}) {
 }
 
 exports.cancel = function cancel ({state}) {
+  const {title, stage} = state.timer
+
   return {
     timer: {
-      stage: '',
-      title: state.timer.title
+      title,
+      stage: ''
     },
-    log: state.log.concat({
+    log: stage === 'finish' ? state.log : state.log.concat({
+      title,
       duration: null,
-      time: Date.now(),
-      title: state.timer.title
+      time: Date.now()
     }),
     message: null
   }
