@@ -23,7 +23,7 @@ module.exports = function init (state, emit) {
           type="number"
           value="${duration}"
           onchange=${event => emit(setConfig, {
-            duration: event.target.value
+            duration: parseInt(event.target.value, 10)
           })} />
         →
         <input
@@ -31,7 +31,7 @@ module.exports = function init (state, emit) {
           type="number"
           value="${breakDuration}"
           onchange=${event => emit(setConfig, {
-            breakDuration: event.target.value
+            breakDuration: parseInt(event.target.value, 10)
           })} />
       </div>
       <footer>

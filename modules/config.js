@@ -9,9 +9,9 @@ const appConfig = new Config({
     duration: 25,
     breakDuration: 5,
     shortcuts: {
+      hideWindow: 'Escape',
       showWindow: 'CommandOrControl+Alt+T',
-      startTimer: 'Enter',
-      hideWindow: 'Escape'
+      startTimer: 'Enter'
     }
   },
   name: `${configDir}/.tom`
