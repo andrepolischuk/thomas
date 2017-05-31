@@ -38,7 +38,7 @@ module.exports = function main (state, emit) {
   return html`
     <main>
       <header>
-        <h1>Tom</h1>
+        <h1>Thomas</h1>
         <article>
           ${routeButton}
           <button

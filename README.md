@@ -1,4 +1,4 @@
-# tom [![Build Status][travis-image]][travis-url]
+# thomas [![Build Status][travis-image]][travis-url]
 
 > Simple pomodoro timer
 
@@ -7,8 +7,8 @@
 ## Install
 
 ```sh
-git clone https://github.com/andrepolischuk/tom
-cd tom
+git clone https://github.com/andrepolischuk/thomas
+cd thomas
 npm install
 ```
 
@@ -38,5 +38,5 @@ npm run build:windows
 
 MIT
 
-[travis-url]: https://travis-ci.org/andrepolischuk/tom
-[travis-image]: https://travis-ci.org/andrepolischuk/tom.svg?branch=master
+[travis-url]: https://travis-ci.org/andrepolischuk/thomas
+[travis-image]: https://travis-ci.org/andrepolischuk/thomas.svg?branch=master

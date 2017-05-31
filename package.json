@@ -1,6 +1,6 @@
 {
-  "name": "tom",
-  "productName": "Tom",
+  "name": "thomas",
+  "productName": "Thomas",
   "version": "0.1.2",
   "description": "Simple pomodoro timer",
   "electronVersion": "0.36.0",
@@ -13,13 +13,13 @@
     "test": "standard",
     "start": "electron .",
     "dist": "npm run dist:macos && npm run dist:linux && npm run dist:windows",
-    "dist:macos": "electron-packager . --overwrite --asar --out=dist --ignore='^/(dist|media)$' --platform=darwin --arch=x64 --icon=assets/icon.icns --app-bundle-id=com.andrepolischuk.tom && cd dist/Tom-darwin-x64 && zip -ryXq9 ../Tom-macos-${npm_package_version}.zip Tom.app",
-    "dist:linux": "electron-packager . --overwrite --out=dist --ignore='^/(dist|media)$' --platform=linux --arch=x64 --icon=assets/icon.png --app-bundle-id=com.andrepolischuk.tom && cd dist/Tom-linux-x64 && zip -ryq9 ../Tom-linux-${npm_package_version}.zip *",
-    "dist:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^/(dist|media)$' --platform=win32 --arch=ia32 --icon=assets/icon.ico --version-string.ProductName=$npm_package_productName && cd dist/Tom-win32-ia32 && zip -ryq9 ../Tom-windows-${npm_package_version}.zip *"
+    "dist:macos": "electron-packager . --overwrite --asar --out=dist --ignore='^/(dist|media)$' --platform=darwin --arch=x64 --icon=assets/icon.icns --app-bundle-id=com.andrepolischuk.thomas && cd dist/Thomas-darwin-x64 && zip -ryXq9 ../Thomas-macos-${npm_package_version}.zip Thomas.app",
+    "dist:linux": "electron-packager . --overwrite --out=dist --ignore='^/(dist|media)$' --platform=linux --arch=x64 --icon=assets/icon.png --app-bundle-id=com.andrepolischuk.thomas && cd dist/Thomas-linux-x64 && zip -ryq9 ../Thomas-linux-${npm_package_version}.zip *",
+    "dist:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^/(dist|media)$' --platform=win32 --arch=ia32 --icon=assets/icon.ico --version-string.ProductName=$npm_package_productName && cd dist/Thomas-win32-ia32 && zip -ryq9 ../Thomas-windows-${npm_package_version}.zip *"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andrepolischuk/tom.git"
+    "url": "git+https://github.com/andrepolischuk/thomas.git"
   },
   "keywords": [
     "electron-app",
@@ -30,9 +30,9 @@
   "author": "Andrey Polischuk <me@andrepolischuk.com> (https://andrepolischuk.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/andrepolischuk/tom/issues"
+    "url": "https://github.com/andrepolischuk/thomas/issues"
   },
-  "homepage": "https://github.com/andrepolischuk/tom",
+  "homepage": "https://github.com/andrepolischuk/thomas",
   "dependencies": {
     "bel": "^5.0.0",
     "dact": "^0.3.2",

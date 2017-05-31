@@ -14,7 +14,7 @@ const appConfig = new Config({
       startTimer: 'Enter'
     }
   },
-  name: `${configDir}/.tom`
+  name: `${configDir}/.thomas`
 })
 
 exports.config = appConfig
