@@ -11,7 +11,7 @@ const appConfig = new Config({
     shortcuts: {
       hideWindow: 'Escape',
       showWindow: 'CommandOrControl+Alt+T',
-      startTimer: 'Enter'
+      startTimer: 'CommandOrControl+Enter'
     }
   },
   name: `${configDir}/.thomas`
