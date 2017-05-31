@@ -39,7 +39,7 @@
     "dact-electron": "^0.1.0",
     "electron-config": "^1.0.0",
     "electron-debug": "^1.0.1",
-    "electron-localshortcut": "^2.0.0",
+    "electron-localshortcut": "^1.1.1",
     "menubar": "^5.2.3",
     "nanomorph": "^5.0.0"
   },
