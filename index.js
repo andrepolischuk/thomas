@@ -6,7 +6,7 @@ const main = require('./elements/main')
 const {readLog, writeLog} = require('./utils/log')
 const createData = require('./modules/createData')
 const {mergeLog} = require('./modules/log')
-const {setTitle, start, cancel} = require('./modules/timer')
+const {setTitle} = require('./modules/timer')
 
 const log = readLog()
 const data = createData(syncData(ipcRenderer))
@@ -24,16 +24,4 @@ data.subscribe(() => {
 
 data.subscribe('log', () => {
   writeLog(data.state.log)
-})
-
-document.addEventListener('keydown', event => {
-  const {startTimer, hideWindow} = data.state.config.shortcuts
-
-  if (event.key === startTimer && !event.target.tagName.match(/^(a|button)$/i)) {
-    data.emit(data.state.timer.remainingTime > 0 ? cancel : start)
-  }
-
-  if (event.key === hideWindow) {
-    ipcRenderer.send('hideWindow')
-  }
 })

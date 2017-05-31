@@ -1,11 +1,12 @@
 'use strict'
 const menubar = require('menubar')
 const syncData = require('dact-electron')
+const localShortcut = require('electron-localshortcut')
 const {globalShortcut, ipcMain} = require('electron')
 const trayIcon = require('./utils/trayIcon')
 const createData = require('./modules/createData')
 const {config, setConfig} = require('./modules/config')
-const {startBreak, tick, finish} = require('./modules/timer')
+const {start, startBreak, tick, cancel, finish} = require('./modules/timer')
 
 require('electron-debug')()
 
@@ -67,10 +68,18 @@ menu.on('after-create-window', () => {
       menu.showWindow()
     })
   }
-})
 
-ipcMain.on('hideWindow', () => {
-  menu.hideWindow()
+  if (shortcuts.hideWindow) {
+    localShortcut.register(menu.window, shortcuts.hideWindow, () => {
+      menu.hideWindow()
+    })
+  }
+
+  if (shortcuts.startTimer) {
+    localShortcut.register(menu.window, shortcuts.startTimer, () => {
+      data.emit(data.state.timer.remainingTime > 0 ? cancel : start)
+    })
+  }
 })
 
 ipcMain.on('quit', () => {
