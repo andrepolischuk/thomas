@@ -21,6 +21,7 @@ menu.on('after-create-window', () => {
   const data = createData(syncData(ipcMain, menu.window))
   const {shortcuts} = data.state.config
   let prevStage
+  let hideTimeout
 
   data.subscribe('timer', () => {
     const {stage, timeout} = data.state.timer
@@ -28,18 +29,18 @@ menu.on('after-create-window', () => {
     setTimeout(() => {
       const {stage, remainingTime} = data.state.timer
 
-      if (stage && remainingTime > 0) {
+      if (remainingTime > 0 && stage) {
         data.emit(tick)
       }
 
-      if (stage === 'interval' && remainingTime <= 0) {
-        data.emit(startBreak)
-        menu.showWindow()
-      }
+      if (remainingTime <= 0 && (stage === 'interval' || stage === 'break')) {
+        data.emit(stage === 'interval' ? startBreak : finish)
+        menu.window.showInactive()
 
-      if (stage === 'break' && remainingTime <= 0) {
-        data.emit(finish)
-        menu.showWindow()
+        hideTimeout = setTimeout(() => {
+          menu.hideWindow()
+          clearTimeout(hideTimeout)
+        }, 4000)
       }
     }, timeout)
 
@@ -51,6 +52,10 @@ menu.on('after-create-window', () => {
 
   data.subscribe('config', () => {
     config.set(data.state.config)
+  })
+
+  menu.window.on('focus', () => {
+    clearTimeout(hideTimeout)
   })
 
   menu.on('show', () => {
