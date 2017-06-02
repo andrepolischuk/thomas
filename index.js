@@ -19,9 +19,7 @@ const body = document.querySelector('body')
 let tree = body.appendChild(main(data.state, data.emit))
 
 data.subscribe(() => {
-  if (!document.hidden) {
-    tree = morph(tree, main(data.state, data.emit))
-  }
+  tree = morph(tree, main(data.state, data.emit))
 })
 
 data.subscribe('log', () => {
