@@ -14,27 +14,17 @@ module.exports = function log (state, emit) {
       prevDate = date
     }
 
-    if (item.duration) {
-      acc[date].push(item.duration)
-    }
+    acc[date].push(item.duration)
 
     return acc
   }, {})
 
-  const logElement = Object.keys(logItems).map(date => {
-    const items = logItems[date]
-
-    if (items.length === 0) {
-      return ''
-    }
-
-    return html`
-      <li>
-        <span>${date}</span>
-        <small>${items.length}x</small>
-      </li>
-    `
-  })
+  const logElement = Object.keys(logItems).map(date => html`
+    <li>
+      <span>${date}</span>
+      <small>${logItems[date].length}x</small>
+    </li>
+  `)
 
   return html`
     <article>

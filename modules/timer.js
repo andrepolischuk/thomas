@@ -63,15 +63,9 @@ exports.finish = function finish ({state}) {
 }
 
 exports.cancel = function cancel ({state}) {
-  const {stage} = state.timer
-
   return {
     timer: {
       stage: ''
-    },
-    log: stage === 'finish' ? state.log : state.log.concat({
-      duration: null,
-      time: Date.now()
-    })
+    }
   }
 }
