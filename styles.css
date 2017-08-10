@@ -16,10 +16,12 @@ body {
   background-color: white;
   color: #383a42;
   font-size: 1rem;
-  font-family: system, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
+  letter-spacing: 0.01rem;
+  -webkit-font-smoothing: antialiased;
 }
 
 main {
@@ -53,7 +55,7 @@ main > header {
 main > article {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   min-height: 100%;
   padding: 50px 25px;
 }
@@ -63,7 +65,7 @@ h1 {
   padding: 0;
   color: #a0a1a7;
   font-size: 0.85rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 h2 {
@@ -74,15 +76,6 @@ h2 {
   font-weight: 400;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-article > header {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: flex-end;
-  margin-bottom: 1rem;
-  height: 3rem;
 }
 
 ul {
@@ -101,25 +94,26 @@ li {
   white-space: nowrap;
 }
 
-li span {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-li span + small {
+li small {
+  margin-left: 1rem;
   color: #a0a1a7;
 }
 
-footer {
-  flex-grow: 1;
+article > header {
   margin-top: 1rem;
+}
+
+article > ul,
+article > footer {
+  margin-top: 1.5rem;
 }
 
 .timer {
   display: flex;
   justify-content: center;
-  font-size: 3rem;
-  font-weight: 300;
+  font-size: 4.5rem;
+  font-weight: 200;
+  line-height: 4.5rem;
 }
 
 .input {
@@ -128,29 +122,19 @@ footer {
   outline: 0;
   margin: 0;
   padding: 0;
-  height: 2rem;
-  background-color: #fafafa;
-  font-size: 1rem;
+  padding-left: 20px;
+  width: 110px;
+  height: 4.5rem;
+  background-color: transparent;
+  font-size: 4.5rem;
+  font-weight: 200;
   text-align: center;
+  line-height: 4.5rem;
   transition: border 100ms, background 100ms;
 }
 
 .input:focus {
   box-shadow: inset 0 0 0 1px #4078f2;
-}
-
-.input-title {
-  margin-bottom: -0.25rem;
-  width: 240px;
-  font-size: 1rem;
-}
-
-.input-timer {
-  padding-left: 20px;
-  width: 100px;
-  height: auto;
-  font-size: 3rem;
-  font-weight: 300;
 }
 
 .button {
@@ -163,7 +147,7 @@ footer {
   background-color: #fafafa;
   color: #383a42;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 1px;
 }
 
@@ -189,6 +173,5 @@ footer {
   padding: 0 4px;
   height: 18px;
   font-size: 0.7rem;
-  font-weight: 400;
   letter-spacing: 0;
 }

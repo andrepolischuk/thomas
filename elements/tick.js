@@ -1,21 +1,41 @@
 'use strict'
 const html = require('bel')
 const formatMs = require('../utils/formatMs')
+const breakTip = require('../utils/breakTip')
 const {cancel} = require('../modules/timer')
 
+let nextTip
+let prevStage
+
 module.exports = function timer (state, emit) {
-  const {stage, title, remainingTime} = state.timer
+  const {breakDuration} = state.config
+  const {stage, remainingTime} = state.timer
+  let titleElement
+
+  if (prevStage !== stage) {
+    nextTip = breakTip()
+    prevStage = stage
+  }
+
+  if (stage === 'interval') {
+    titleElement = html`
+      <div class="timer">
+        ${formatMs(remainingTime)}
+      </div>
+    `
+  } else {
+    titleElement = html`
+      <h2>
+        Done. Break for a ${breakDuration} minutes. ${nextTip}.
+      </h2>
+    `
+  }
 
   return html`
     <article>
       <header>
-        <h2>
-          ${stage === 'interval' ? (title || 'Untitled') : state.message}
-        </h2>
+        ${titleElement}
       </header>
-      <div class="timer">
-        ${formatMs(remainingTime)}
-      </div>
       <footer>
         <button class="button button-reset" onclick=${() => emit(cancel)}>
           Cancel

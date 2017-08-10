@@ -7,7 +7,7 @@ module.exports = function finish (state, emit) {
     <article>
       <header>
         <h2>
-          Hooray. ${state.timer.title || 'All'} is done. You can start it again.
+          Hooray. All is done. You can start it again.
         </h2>
       </header>
       <footer>

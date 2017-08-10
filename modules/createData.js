@@ -9,7 +9,6 @@ module.exports = function createDataWithMiddlewares (...middlewares) {
     },
     log: [],
     config: config.store,
-    message: null,
     location: 'timer'
   }
 

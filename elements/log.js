@@ -6,37 +6,43 @@ const {setLocation} = require('../modules/location')
 module.exports = function log (state, emit) {
   let prevDate
 
+  const logItems = state.log.reduceRight((acc, item) => {
+    const date = new Date(item.time).toLocaleDateString()
+
+    if (prevDate !== date) {
+      acc[date] = []
+      prevDate = date
+    }
+
+    if (item.duration) {
+      acc[date].push(item.duration)
+    }
+
+    return acc
+  }, {})
+
+  const logElement = Object.keys(logItems).map(date => {
+    const items = logItems[date]
+
+    if (items.length === 0) {
+      return ''
+    }
+
+    return html`
+      <li>
+        <span>${date}</span>
+        <small>${items.length}x</small>
+      </li>
+    `
+  })
+
   return html`
     <article>
       <header>
         <h2>Log</h2>
       </header>
       <ul>
-        ${state.log.reduceRight((accumulated, item) => {
-          const date = new Date(item.time).toLocaleDateString()
-          let titleElement
-
-          if (prevDate !== date) {
-            titleElement = html`
-              <li>
-                <small>${date}</small>
-              </li>
-            `
-
-            prevDate = date
-          }
-
-          const element = html`
-            <li>
-              <span>${item.title || 'Untitled'}</span>
-              <small>
-                ${item.duration ? `${item.duration}m` : 'Canceled'}
-              </small>
-            </li>
-          `
-
-          return accumulated.concat(titleElement, element)
-        }, [])}
+        ${logElement}
       </ul>
       <footer>
         <button class="button" onclick=${() => {
