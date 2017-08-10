@@ -11,7 +11,6 @@ module.exports = function init (state, emit) {
       <header>
         <div class="timer">
           <input
-            class="input"
             type="number"
             value="${duration}"
             onchange=${event => emit(setConfig, {
@@ -19,7 +18,6 @@ module.exports = function init (state, emit) {
             })} />
           →
           <input
-            class="input"
             type="number"
             value="${breakDuration}"
             onchange=${event => emit(setConfig, {
@@ -28,7 +26,7 @@ module.exports = function init (state, emit) {
         </div>
       </header>
       <footer>
-        <button class="button button-submit" onclick=${() => emit(start)}>
+        <button type="submit" onclick=${() => emit(start)}>
           Start
         </button>
       </footer>

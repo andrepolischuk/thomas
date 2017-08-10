@@ -11,10 +11,10 @@ module.exports = function finish (state, emit) {
         </h2>
       </header>
       <footer>
-        <button class="button button-submit" onclick=${() => emit(start)}>
+        <button type="submit" onclick=${() => emit(start)}>
           Restart
         </button>
-        <button class="button" onclick=${() => emit(cancel)}>
+        <button onclick=${() => emit(cancel)}>
           Reset
         </button>
       </footer>

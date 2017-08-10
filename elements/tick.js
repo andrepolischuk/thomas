@@ -37,7 +37,7 @@ module.exports = function timer (state, emit) {
         ${titleElement}
       </header>
       <footer>
-        <button class="button button-reset" onclick=${() => emit(cancel)}>
+        <button type="reset" onclick=${() => emit(cancel)}>
           Cancel
         </button>
       </footer>

@@ -35,7 +35,7 @@ module.exports = function log (state, emit) {
         ${logElement}
       </ul>
       <footer>
-        <button class="button" onclick=${() => {
+        <button onclick=${() => {
           emit(clearLog)
           emit(setLocation, 'timer')
         }}>

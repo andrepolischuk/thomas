@@ -17,9 +17,7 @@ module.exports = function main (state, emit) {
 
   if (state.location === 'log') {
     routeButton = html`
-      <button
-        class="button button-small"
-        onclick=${() => emit(setLocation, 'timer')}>
+      <button onclick=${() => emit(setLocation, 'timer')}>
         ${formatMs(state.timer.remainingTime)}
       </button>
     `
@@ -27,9 +25,7 @@ module.exports = function main (state, emit) {
 
   if (state.location === 'timer' && state.log.length > 0) {
     routeButton = html`
-      <button
-        class="button button-small"
-        onclick=${() => emit(setLocation, 'log')}>
+      <button onclick=${() => emit(setLocation, 'log')}>
         Log
       </button>
     `
@@ -41,9 +37,7 @@ module.exports = function main (state, emit) {
         <h1>Thomas</h1>
         <article>
           ${routeButton}
-          <button
-            class="button button-small"
-            onclick=${() => ipcRenderer.send('quit')}>
+          <button onclick=${() => ipcRenderer.send('quit')}>
             ✕
           </button>
         </article>
