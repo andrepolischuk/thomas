@@ -16,7 +16,7 @@ module.exports = function init (state, emit) {
             onchange=${event => emit(setConfig, {
               duration: parseInt(event.target.value, 10)
             })} />
-          →
+          <small>→</small>
           <input
             type="number"
             value="${breakDuration}"
