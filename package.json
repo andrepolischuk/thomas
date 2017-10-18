@@ -40,7 +40,6 @@
     "electron-config": "^1.0.0",
     "electron-debug": "^1.0.1",
     "electron-localshortcut": "^1.1.1",
-    "menubar": "^5.2.3",
     "nanomorph": "^5.0.0"
   },
   "devDependencies": {

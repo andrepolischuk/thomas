@@ -3,10 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="preload" href="./styles.css" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="./index.js" as="script">
   </head>
   <body>
-    <script src="./index.js"></script>
+    <script src="./index.js" async></script>
   </body>
 </html>
 

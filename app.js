@@ -1,27 +1,39 @@
 'use strict'
-const menubar = require('menubar')
 const syncData = require('dact-electron')
 const localShortcut = require('electron-localshortcut')
-const {globalShortcut, ipcMain} = require('electron')
-const trayIcon = require('./utils/trayIcon')
+const {app, globalShortcut, ipcMain, BrowserWindow, Tray} = require('electron')
+const createTrayIcon = require('./utils/trayIcon')
 const createData = require('./modules/createData')
 const {config, setConfig} = require('./modules/config')
 const {start, startBreak, tick, cancel, finish} = require('./modules/timer')
 
 require('electron-debug')()
 
-const menu = menubar({
-  preloadWindow: true,
-  width: 300,
-  height: 300,
-  icon: trayIcon()
-})
-
-menu.on('after-create-window', () => {
-  const data = createData(syncData(ipcMain, menu.window))
-  const {shortcuts} = data.state.config
+app.on('ready', () => {
+  let tray
   let prevStage
   let hideTimeout
+
+  let mainWindow = new BrowserWindow({
+    width: 300,
+    height: 300,
+    icon: `file://${__dirname}/assets/icon.png`,
+    show: false,
+    resizable: false,
+    fullscreenable: false,
+    backgroundColor: '#ffffff',
+    title: 'Thomas',
+    titleBarStyle: 'hidden-inset'
+  })
+
+  const data = createData(syncData(ipcMain, mainWindow))
+  const {shortcuts, trayIcon} = data.state.config
+
+  mainWindow.loadURL(`file://${__dirname}/index.html`)
+
+  if (trayIcon) {
+    tray = new Tray(createTrayIcon())
+  }
 
   data.subscribe('timer', () => {
     const {stage, timeout} = data.state.timer
@@ -35,18 +47,18 @@ menu.on('after-create-window', () => {
 
       if (remainingTime <= 0 && (stage === 'interval' || stage === 'break')) {
         data.emit(stage === 'interval' ? startBreak : finish)
-        menu.window.showInactive()
+        mainWindow.showInactive()
 
         hideTimeout = setTimeout(() => {
-          menu.hideWindow()
+          mainWindow.hide()
           clearTimeout(hideTimeout)
         }, 4000)
       }
     }, timeout)
 
-    if (prevStage !== stage) {
+    if (tray && prevStage !== stage) {
       prevStage = stage
-      menu.tray.setImage(trayIcon(stage))
+      tray.setImage(createTrayIcon(stage))
     }
   })
 
@@ -54,39 +66,61 @@ menu.on('after-create-window', () => {
     config.set(data.state.config)
   })
 
-  menu.window.on('focus', () => {
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
+
+  mainWindow.on('focus', () => {
     clearTimeout(hideTimeout)
   })
 
-  menu.on('show', () => {
+  mainWindow.on('show', () => {
     data.emit(setConfig, config.store)
   })
 
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+
   if (process.platform === 'darwin') {
-    menu.on('after-hide', () => {
-      menu.app.hide()
+    mainWindow.on('hide', () => {
+      app.hide()
+    })
+  }
+
+  if (tray) {
+    tray.on('click', () => {
+      mainWindow.show()
     })
   }
 
   if (shortcuts.showWindow) {
     globalShortcut.register(shortcuts.showWindow, () => {
-      menu.showWindow()
+      mainWindow.show()
     })
   }
 
   if (shortcuts.hideWindow) {
-    localShortcut.register(menu.window, shortcuts.hideWindow, () => {
-      menu.hideWindow()
+    localShortcut.register(mainWindow, shortcuts.hideWindow, () => {
+      mainWindow.hide()
     })
   }
 
   if (shortcuts.startTimer) {
-    localShortcut.register(menu.window, shortcuts.startTimer, () => {
+    localShortcut.register(mainWindow, shortcuts.startTimer, () => {
       data.emit(data.state.timer.remainingTime > 0 ? cancel : start)
     })
   }
 })
 
+app.on('window-all-closed', () => {
+  if (process.platform === 'darwin') {
+    app.hide()
+  } else {
+    app.quit()
+  }
+})
+
 ipcMain.on('quit', () => {
-  menu.app.quit()
+  app.quit()
 })
