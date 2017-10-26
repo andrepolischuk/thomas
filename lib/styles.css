@@ -31,6 +31,11 @@ body {
 }
 
 main {
+  height: 100%;
+  text-align: center;
+}
+
+article {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -150,9 +155,31 @@ button[type="submit"] {
   color: var(--additional);
 }
 
-header button {
-  padding: 0 4px;
-  height: 18px;
-  font-size: 0.7rem;
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 80%, transparent);
+  line-height: 1rem;
+}
+
+nav button {
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  font-size: 0.9rem;
+  line-height: 1rem;
   letter-spacing: 0;
+  text-transform: capitalize;
+  margin-left: 0.3rem;
+}
+
+nav button[aria-selected="false"] {
+  opacity: 0.3;
 }
