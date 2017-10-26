@@ -166,6 +166,7 @@ nav {
   padding: 10px;
   background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 80%, transparent);
   line-height: 1rem;
+  -webkit-app-region: drag;
 }
 
 nav button {
