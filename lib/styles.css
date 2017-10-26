@@ -31,51 +31,16 @@ body {
 }
 
 main {
-  height: 100%;
-  text-align: center;
-}
-
-main::after {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 10px;
-  background-image: linear-gradient(to top, rgba(255, 255, 255, 0.9), transparent);
-  content: "";
-}
-
-main > header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 80%, transparent);
-  line-height: 1rem;
-}
-
-main > article {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 100%;
   padding: 50px 25px;
+  text-align: center;
 }
 
 h1 {
-  margin: 0;
-  padding: 0;
-  color: var(--main);
-  font-size: 0.85rem;
-  font-weight: 500;
-  opacity: 0.8;
-}
-
-h2 {
+  flex-basis: 100%;
   margin: 0;
   padding: 0;
   color: var(--main);
@@ -106,18 +71,23 @@ li small {
   color: var(--main);
 }
 
-article > header {
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 1rem;
+  text-align: center;
 }
 
-article > ul,
-article > footer {
+ul,
+footer {
   margin-top: 1.5rem;
 }
 
 .timer {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
   font-size: 4.5rem;
   font-weight: 200;
   line-height: 4.5rem;
