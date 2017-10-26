@@ -1,7 +1,6 @@
 'use strict'
 const {app, shell} = require('electron')
 const {setConfig} = require('../modules/config')
-const {setLocation} = require('../modules/location')
 
 module.exports = function menuTemplate (data) {
   return [
@@ -116,26 +115,6 @@ module.exports = function menuTemplate (data) {
           label: 'Close',
           accelerator: 'CommandOrControl+W',
           role: 'close'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Timer',
-          accelerator: 'CommandOrControl+T',
-          click () {
-            data.emit(setLocation, 'timer')
-          },
-          type: 'radio',
-          checked: true
-        },
-        {
-          label: 'Log',
-          accelerator: 'CommandOrControl+L',
-          click () {
-            data.emit(setLocation, 'log')
-          },
-          type: 'radio'
         },
         {
           type: 'separator'

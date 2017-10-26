@@ -15,7 +15,7 @@ module.exports = function createWindow () {
   let prevStage
   let hideTimeout
 
-  let window = new BrowserWindow({
+  const window = new BrowserWindow({
     width: 300,
     height: 300,
     icon: `file://${root}/assets/icon.png`,
@@ -94,10 +94,6 @@ module.exports = function createWindow () {
 
   window.on('show', () => {
     data.emit(setConfig, config.store)
-  })
-
-  window.on('closed', () => {
-    window = null
   })
 
   if (shortcuts.showWindow) {
