@@ -1,7 +1,7 @@
 'use strict'
 const syncData = require('dact-electron')
 const localShortcut = require('electron-localshortcut')
-const {globalShortcut, ipcMain, BrowserWindow, Menu, Tray} = require('electron')
+const {app, globalShortcut, ipcMain, BrowserWindow, Menu, Tray} = require('electron')
 const {join} = require('path')
 const stageIcon = require('./stageIcon')
 const menuTemplate = require('./menuTemplate')
@@ -33,6 +33,14 @@ module.exports = function createWindow () {
   const {shortcuts} = data.state.config
   const menu = Menu.buildFromTemplate(menuTemplate(data))
 
+  const hideWindow = () => {
+    if (process.platform === 'darwin') {
+      app.hide()
+    } else {
+      window.hide()
+    }
+  }
+
   Menu.setApplicationMenu(menu)
 
   data.subscribe('timer', () => {
@@ -50,9 +58,9 @@ module.exports = function createWindow () {
         window.showInactive()
 
         hideTimeout = setTimeout(() => {
-          window.hide()
+          hideWindow()
           clearTimeout(hideTimeout)
-        }, 4000)
+        }, 5000)
       }
     }, timeout)
 
@@ -104,7 +112,7 @@ module.exports = function createWindow () {
 
   if (shortcuts.hideWindow) {
     localShortcut.register(window, shortcuts.hideWindow, () => {
-      window.hide()
+      hideWindow()
     })
   }
 
