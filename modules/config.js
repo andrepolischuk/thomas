@@ -12,7 +12,8 @@ const appConfig = new Config({
       hideWindow: 'Escape',
       showWindow: 'CommandOrControl+Alt+T',
       startTimer: 'CommandOrControl+Enter'
-    }
+    },
+    trayIcon: true
   },
   name: `${configDir}/.thomas`
 })
