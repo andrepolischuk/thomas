@@ -138,7 +138,8 @@ module.exports = function menuTemplate (data) {
           label: 'Close',
           accelerator: 'CommandOrControl+W',
           role: 'close'
-        }      ]
+        }
+      ]
     },
     {
       label: 'Help',
