@@ -13,7 +13,8 @@ const appConfig = new Config({
       showWindow: 'CommandOrControl+Alt+T',
       startTimer: 'CommandOrControl+Enter'
     },
-    trayIcon: true
+    trayIcon: false,
+    progressBar: false
   },
   name: `${configDir}/.thomas`
 })

@@ -10,9 +10,9 @@ const {config, setConfig} = require('../modules/config')
 const {start, startBreak, tick, cancel, finish} = require('../modules/timer')
 
 module.exports = function createWindow () {
+  const cache = {}
   const root = join(__dirname, '..')
   let tray
-  let prevStage
   let hideTimeout
 
   const window = new BrowserWindow({
@@ -47,10 +47,15 @@ module.exports = function createWindow () {
     const {stage, timeout} = data.state.timer
 
     setTimeout(() => {
+      const {progressBar} = data.state.config
       const {stage, remainingTime} = data.state.timer
 
       if (remainingTime > 0 && stage) {
         data.emit(tick)
+      }
+
+      if (remainingTime > 0 && stage === 'interval' && progressBar) {
+        window.setProgressBar(1 - (remainingTime / data.state.config.duration / 6e4))
       }
 
       if (remainingTime <= 0 && (stage === 'interval' || stage === 'break')) {
@@ -64,31 +69,44 @@ module.exports = function createWindow () {
       }
     }, timeout)
 
-    if (tray && prevStage !== stage) {
-      prevStage = stage
-      tray.setImage(stageIcon(stage))
+    if (cache.stage !== stage) {
+      if (cache.stage === 'interval') {
+        window.setProgressBar(-1)
+      }
+
+      if (tray) {
+        tray.setImage(stageIcon(stage))
+      }
+
+      cache.stage = stage
     }
   })
 
   data.subscribe('config', () => {
     const {stage} = data.state.timer
-    const {trayIcon} = data.state.config
+    const {trayIcon, progressBar} = data.state.config
 
     config.set(data.state.config)
 
-    if (trayIcon === !!tray) {
-      return
+    if (trayIcon === !tray) {
+      if (trayIcon) {
+        tray = new Tray(stageIcon(stage))
+
+        tray.on('click', () => {
+          window.show()
+        })
+      } else {
+        tray.destroy()
+        tray = null
+      }
     }
 
-    if (trayIcon) {
-      tray = new Tray(stageIcon(stage))
+    if (progressBar !== cache.progressBar) {
+      if (!progressBar) {
+        window.setProgressBar(-1)
+      }
 
-      tray.on('click', () => {
-        window.show()
-      })
-    } else {
-      tray.destroy()
-      tray = null
+      cache.progressBar = progressBar
     }
   })
 

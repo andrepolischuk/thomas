@@ -99,6 +99,29 @@ module.exports = function menuTemplate (data) {
               window.webContents.toggleDevTools()
             }
           }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Tray icon',
+          click () {
+            data.emit(setConfig, {
+              trayIcon: !data.state.config.trayIcon
+            })
+          },
+          type: 'checkbox',
+          checked: data.state.config.trayIcon
+        },
+        {
+          label: 'Progress bar',
+          click (item, window) {
+            data.emit(setConfig, {
+              progressBar: !data.state.config.progressBar
+            })
+          },
+          type: 'checkbox',
+          checked: data.state.config.progressBar
         }
       ]
     },
@@ -115,21 +138,7 @@ module.exports = function menuTemplate (data) {
           label: 'Close',
           accelerator: 'CommandOrControl+W',
           role: 'close'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Show tray icon',
-          click () {
-            data.emit(setConfig, {
-              trayIcon: !data.state.config.trayIcon
-            })
-          },
-          type: 'checkbox',
-          checked: data.state.config.trayIcon
-        }
-      ]
+        }      ]
     },
     {
       label: 'Help',
