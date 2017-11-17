@@ -12,6 +12,12 @@ cd thomas
 npm install
 ```
 
+If you use Ubuntu or Debian, you also may need to install `nodejs-legacy` that creates `node` symlink.
+
+```sh
+sudo apt-get install nodejs-legacy
+```
+
 ## Shortcuts
 
 * `CommandOrControl+Alt+T` — show application *(global)*
