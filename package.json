@@ -39,9 +39,9 @@
     "bel": "^5.0.0",
     "dact": "^0.3.2",
     "dact-electron": "^0.1.0",
-    "electron-config": "^1.0.0",
     "electron-debug": "^1.0.1",
     "electron-localshortcut": "^1.1.1",
+    "electron-settings": "^3.1.4",
     "nanomorph": "^5.0.0"
   },
   "devDependencies": {

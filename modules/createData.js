@@ -1,6 +1,6 @@
 'use strict'
 const createData = require('dact')
-const {config} = require('./config')
+const {settings} = require('./settings')
 
 module.exports = function createDataWithMiddlewares (...middlewares) {
   const initialState = {
@@ -8,8 +8,8 @@ module.exports = function createDataWithMiddlewares (...middlewares) {
       stage: ''
     },
     log: [],
-    config: config.store,
-    location: 'timer'
+    location: 'timer',
+    settings: settings.getAll()
   }
 
   return createData(initialState, ...middlewares)

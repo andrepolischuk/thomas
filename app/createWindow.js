@@ -6,7 +6,7 @@ const {join} = require('path')
 const stageIcon = require('./stageIcon')
 const menuTemplate = require('./menuTemplate')
 const createData = require('../modules/createData')
-const {config, setConfig} = require('../modules/config')
+const {settings, updateSettings} = require('../modules/settings')
 const {start, startBreak, tick, cancel, finish} = require('../modules/timer')
 
 module.exports = function createWindow () {
@@ -30,7 +30,7 @@ module.exports = function createWindow () {
   window.loadURL(`file://${root}/lib/index.html`)
 
   const data = createData(syncData(ipcMain, window))
-  const {shortcuts} = data.state.config
+  const {shortcuts} = data.state.settings
   const menu = Menu.buildFromTemplate(menuTemplate(data))
 
   const hideWindow = () => {
@@ -47,7 +47,7 @@ module.exports = function createWindow () {
     const {stage, timeout} = data.state.timer
 
     setTimeout(() => {
-      const {progressBar} = data.state.config
+      const {progressBar} = data.state.settings
       const {stage, remainingTime} = data.state.timer
 
       if (remainingTime > 0 && stage) {
@@ -55,7 +55,7 @@ module.exports = function createWindow () {
       }
 
       if (remainingTime > 0 && stage === 'interval' && progressBar) {
-        window.setProgressBar(1 - (remainingTime / data.state.config.duration / 6e4))
+        window.setProgressBar(1 - (remainingTime / data.state.settings.duration / 6e4))
       }
 
       if (remainingTime <= 0 && (stage === 'interval' || stage === 'break')) {
@@ -82,11 +82,11 @@ module.exports = function createWindow () {
     }
   })
 
-  data.subscribe('config', () => {
+  data.subscribe('settings', () => {
     const {stage} = data.state.timer
-    const {trayIcon, progressBar} = data.state.config
+    const {trayIcon, progressBar} = data.state.settings
 
-    config.set(data.state.config)
+    settings.setAll(data.state.settings, {prettify: true})
 
     if (trayIcon === !tray) {
       if (trayIcon) {
@@ -119,7 +119,7 @@ module.exports = function createWindow () {
   })
 
   window.on('show', () => {
-    data.emit(setConfig, config.store)
+    data.emit(updateSettings, settings.getAll())
   })
 
   if (shortcuts.showWindow) {

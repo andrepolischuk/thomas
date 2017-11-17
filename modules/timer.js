@@ -6,7 +6,7 @@ exports.start = function start ({state}) {
       stage: 'interval',
       timeout: 1e3,
       prevTime: Date.now(),
-      remainingTime: state.config.duration * 60 * 1000
+      remainingTime: state.settings.duration * 60 * 1000
     }),
     location: 'timer'
   }
@@ -18,7 +18,7 @@ exports.startBreak = function startBreak ({state}) {
       stage: 'break',
       timeout: 1e3,
       prevTime: Date.now(),
-      remainingTime: state.config.breakDuration * 60 * 1000
+      remainingTime: state.settings.breakDuration * 60 * 1000
     }),
     location: 'timer'
   }
@@ -55,7 +55,7 @@ exports.finish = function finish ({state}) {
       stage: 'finish'
     },
     log: state.log.concat({
-      duration: state.config.duration,
+      duration: state.settings.duration,
       time: Date.now()
     }),
     location: 'timer'
