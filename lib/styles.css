@@ -66,14 +66,12 @@ li {
   display: flex;
   justify-content: space-between;
   margin: 0.5rem 0 0.75rem;
-  font-size: 0.85rem;
   line-height: 1rem;
   white-space: nowrap;
 }
 
-li small {
-  margin-left: 1rem;
-  color: var(--main);
+li :first-child {
+  font-size: 0.85rem;
 }
 
 header {
