@@ -10,9 +10,9 @@ const {settings, updateSettings} = require('../modules/settings')
 const {start, startBreak, tick, cancel, finish} = require('../modules/timer')
 
 module.exports = function createWindow () {
-  const cache = {}
   const root = join(__dirname, '..')
   let tray
+  let lastStage
   let hideTimeout
 
   const window = new BrowserWindow({
@@ -69,8 +69,8 @@ module.exports = function createWindow () {
       }
     }, timeout)
 
-    if (cache.stage !== stage) {
-      if (cache.stage === 'interval') {
+    if (lastStage !== stage) {
+      if (lastStage === 'interval') {
         window.setProgressBar(-1)
       }
 
@@ -78,7 +78,7 @@ module.exports = function createWindow () {
         tray.setImage(stageIcon(stage))
       }
 
-      cache.stage = stage
+      lastStage = stage
     }
   })
 
@@ -88,30 +88,24 @@ module.exports = function createWindow () {
 
     settings.setAll(data.state.settings, {prettify: true})
 
-    if (trayIcon === !tray) {
-      if (trayIcon) {
-        tray = new Tray(stageIcon(stage))
+    if (!tray && trayIcon) {
+      tray = new Tray(stageIcon(stage))
 
-        tray.on('click', () => {
-          window.show()
-        })
+      tray.on('click', () => {
+        window.show()
+      })
 
-        if (app.dock) {
-          app.dock.hide()
-        }
-      } else {
-        tray.destroy()
-        tray = null
-        app.dock.show()
+      if (app.dock) {
+        app.dock.hide()
       }
+    } else if (tray) {
+      tray.destroy()
+      tray = null
+      app.dock.show()
     }
 
-    if (progressBar !== cache.progressBar) {
-      if (!progressBar) {
-        window.setProgressBar(-1)
-      }
-
-      cache.progressBar = progressBar
+    if (progressBar) {
+      window.setProgressBar(-1)
     }
   })
 
