@@ -95,9 +95,14 @@ module.exports = function createWindow () {
         tray.on('click', () => {
           window.show()
         })
+
+        if (app.dock) {
+          app.dock.hide()
+        }
       } else {
         tray.destroy()
         tray = null
+        app.dock.show()
       }
     }
 
