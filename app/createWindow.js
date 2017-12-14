@@ -6,7 +6,7 @@ const {join} = require('path')
 const stageIcon = require('./stageIcon')
 const menuTemplate = require('./menuTemplate')
 const createData = require('../modules/createData')
-const {settings, updateSettings} = require('../modules/settings')
+const {settings, saveSettings, updateSettings} = require('../modules/settings')
 const {start, startBreak, tick, cancel, finish} = require('../modules/timer')
 
 module.exports = function createWindow () {
@@ -86,7 +86,7 @@ module.exports = function createWindow () {
     const {stage} = data.state.timer
     const {trayIcon, progressBar} = data.state.settings
 
-    settings.setAll(data.state.settings, {prettify: true})
+    saveSettings(data.state.settings)
 
     if (!tray && trayIcon) {
       tray = new Tray(stageIcon(stage))
