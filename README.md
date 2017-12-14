@@ -4,40 +4,43 @@
 
 ![](media/screenshot.png)
 
-## Install
+## Usage
+
+[Download the latest release!](https://github.com/andrepolischuk/thomas/releases/latest)
+
+### Features
+
+* 25/5 minutes interval by default, but you can configure this on start screen
+* Built-in keyboard shortcuts
+* Minimal log that contains all completed intervals counts per day
+
+### Shortcuts
+
+* `CommandOrControl+Alt+T` — show application
+* `Escape` — hide application
+* `CommandOrControl+Enter` — start/cancel timer
+
+## Contribute
+
+Fork this repository, clone to your local device and install dependencies:
 
 ```sh
-git clone https://github.com/andrepolischuk/thomas
-cd thomas
 npm install
+npm start
 ```
 
-If you use Ubuntu or Debian, you also may need to install `nodejs-legacy` that creates `node` symlink.
+If you use Ubuntu or Debian, you also may need to install `nodejs-legacy` that creates `node` symlink:
 
 ```sh
 sudo apt-get install nodejs-legacy
 ```
 
-## Shortcuts
-
-* `CommandOrControl+Alt+T` — show application *(global)*
-* `Escape` — hide application
-* `CommandOrControl+Enter` — start/cancel timer
-
-## Run
+You can pack application for specified platform:
 
 ```sh
-npm start
-```
-
-## Build
-
-Build the application for specified platform:
-
-```sh
-npm run build:macos
-npm run build:linux
-npm run build:windows
+npm run dist:macos
+npm run dist:linux
+npm run dist:windows
 ```
 
 ## License
