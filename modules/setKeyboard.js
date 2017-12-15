@@ -1,6 +1,6 @@
 'use strict'
 
-exports.setKeyboard = function setKeyboard (enabled) {
+module.exports = function setKeyboard (enabled) {
   return {
     keyboardEvents: enabled
   }

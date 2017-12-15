@@ -1,5 +1,6 @@
 'use strict'
-const {start, cancel} = require('../modules/timer')
+const start = require('../modules/start')
+const cancel = require('../modules/cancel')
 
 module.exports = function createKeyboardCallbacks (window, data) {
   function showWindow () {
