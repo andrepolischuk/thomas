@@ -9,6 +9,7 @@ module.exports = function createDataWithMiddlewares (...middlewares) {
     },
     log: [],
     location: 'timer',
+    keyboardEvents: true,
     settings: settings.getAll()
   }
 

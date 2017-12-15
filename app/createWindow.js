@@ -1,13 +1,14 @@
 'use strict'
 const syncData = require('dact-electron')
-const localShortcut = require('electron-localshortcut')
-const {app, globalShortcut, ipcMain, BrowserWindow, Menu, Tray} = require('electron')
+const {app, ipcMain, BrowserWindow, Menu, Tray} = require('electron')
 const {join} = require('path')
 const stageIcon = require('./stageIcon')
 const menuTemplate = require('./menuTemplate')
+const updateShortcuts = require('./updateShortcuts')
+const createKeyboardCallbacks = require('./createKeyboardCallbacks')
 const createData = require('../modules/createData')
-const {settings, saveSettings, updateSettings} = require('../modules/settings')
-const {start, startBreak, tick, cancel, finish} = require('../modules/timer')
+const {settings, normalizeSettings, updateSettings} = require('../modules/settings')
+const {startBreak, tick, finish} = require('../modules/timer')
 
 module.exports = function createWindow () {
   const root = join(__dirname, '..')
@@ -29,17 +30,17 @@ module.exports = function createWindow () {
 
   window.loadURL(`file://${root}/lib/index.html`)
 
-  const data = createData(syncData(ipcMain, window))
-  const {shortcuts} = data.state.settings
-  const menu = Menu.buildFromTemplate(menuTemplate(data))
-
-  const hideWindow = () => {
+  window.hideAll = () => {
     if (process.platform === 'darwin') {
       app.hide()
     } else {
       window.hide()
     }
   }
+
+  const data = createData(syncData(ipcMain, window))
+  const menu = Menu.buildFromTemplate(menuTemplate())
+  const keyboardCallbacks = createKeyboardCallbacks(window, data)
 
   Menu.setApplicationMenu(menu)
 
@@ -63,7 +64,7 @@ module.exports = function createWindow () {
         window.showInactive()
 
         hideTimeout = setTimeout(() => {
-          hideWindow()
+          window.hideAll()
           clearTimeout(hideTimeout)
         }, 5000)
       }
@@ -86,7 +87,10 @@ module.exports = function createWindow () {
     const {stage} = data.state.timer
     const {trayIcon, progressBar} = data.state.settings
 
-    saveSettings(data.state.settings)
+    settings.setAll(
+      normalizeSettings(data.state.settings),
+      {prettify: true}
+    )
 
     if (!tray && trayIcon) {
       tray = new Tray(stageIcon(stage))
@@ -107,6 +111,12 @@ module.exports = function createWindow () {
     if (progressBar) {
       window.setProgressBar(-1)
     }
+
+    updateShortcuts(window, data.state, keyboardCallbacks)
+  })
+
+  data.subscribe('keyboardEvents', () => {
+    updateShortcuts(window, data.state, keyboardCallbacks)
   })
 
   window.once('ready-to-show', () => {
@@ -120,22 +130,4 @@ module.exports = function createWindow () {
   window.on('show', () => {
     data.emit(updateSettings, settings.getAll())
   })
-
-  if (shortcuts.showWindow) {
-    globalShortcut.register(shortcuts.showWindow, () => {
-      window.show()
-    })
-  }
-
-  if (shortcuts.hideWindow) {
-    localShortcut.register(window, shortcuts.hideWindow, () => {
-      hideWindow()
-    })
-  }
-
-  if (shortcuts.startTimer) {
-    localShortcut.register(window, shortcuts.startTimer, () => {
-      data.emit(data.state.timer.remainingTime > 0 ? cancel : start)
-    })
-  }
 }

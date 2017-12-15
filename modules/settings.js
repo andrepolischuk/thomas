@@ -17,21 +17,20 @@ const defaults = {
 settings.setPath(`${homedir()}/.thomas.json`)
 
 if (!settings.has('duration')) {
-  saveSettings(defaults)
-}
-
-function saveSettings (newSettings) {
-  const nextSettings = Object.assign({}, settings.getAll())
-
-  for (const key in newSettings) {
-    nextSettings[key] = newSettings[key]
-  }
-
-  settings.setAll(nextSettings, {prettify: true})
+  settings.setAll(defaults, {prettify: true})
 }
 
 exports.settings = settings
-exports.saveSettings = saveSettings
+
+exports.normalizeSettings = function normalizeSettings (settings) {
+  const nextSettings = Object.assign({}, defaults)
+
+  Object.entries(settings).forEach(([key, value]) => {
+    nextSettings[key] = value
+  })
+
+  return nextSettings
+}
 
 exports.updateSettings = function updateSettings (settings, {state}) {
   return {

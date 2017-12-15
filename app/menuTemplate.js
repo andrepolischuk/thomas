@@ -1,8 +1,7 @@
 'use strict'
 const {app, shell} = require('electron')
-const {updateSettings} = require('../modules/settings')
 
-module.exports = function menuTemplate (data) {
+module.exports = function menuTemplate () {
   return [
     {
       label: 'Thomas',
@@ -99,29 +98,6 @@ module.exports = function menuTemplate (data) {
               window.webContents.toggleDevTools()
             }
           }
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Tray icon',
-          click () {
-            data.emit(updateSettings, {
-              trayIcon: !data.state.settings.trayIcon
-            })
-          },
-          type: 'checkbox',
-          checked: data.state.settings.trayIcon
-        },
-        {
-          label: 'Progress bar',
-          click (item, window) {
-            data.emit(updateSettings, {
-              progressBar: !data.state.settings.progressBar
-            })
-          },
-          type: 'checkbox',
-          checked: data.state.settings.progressBar
         }
       ]
     },

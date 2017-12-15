@@ -10,9 +10,10 @@
 
 ### Features
 
-* 25/5 minutes interval by default, but you can configure this on start screen
-* Built-in keyboard shortcuts
+* 25/5 minutes interval by default, but you can configure this
+* Built-in configurable keyboard shortcuts
 * Minimal log that contains all completed intervals counts per day
+* Tray icon and progress bar
 
 ### Shortcuts
 
