@@ -6,7 +6,7 @@
   "electronVersion": "0.36.0",
   "main": "app/index.js",
   "files": [
-    "assets",
+    "build",
     "app",
     "lib",
     "modules"

@@ -23,7 +23,7 @@ module.exports = function createWindow () {
   const window = new BrowserWindow({
     width: 300,
     height: 300,
-    icon: `file://${root}/assets/icon.png`,
+    icon: `file://${root}/build/icon.png`,
     show: false,
     resizable: false,
     fullscreenable: false,
