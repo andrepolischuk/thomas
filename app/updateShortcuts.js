@@ -14,7 +14,8 @@ module.exports = function updateShortcuts (window, state, callbacks) {
   }
 
   const {shortcuts} = state.settings
-  const registeredShortcuts = (prevState.settings && prevState.settings.shortcuts) || {}
+  const registeredShortcuts =
+    (prevState.settings && prevState.settings.shortcuts) || {}
 
   Object.entries(shortcuts).forEach(([action, keys]) => {
     const fn = callbacks[action]
@@ -29,7 +30,10 @@ module.exports = function updateShortcuts (window, state, callbacks) {
         globalShortcut.register(keys, fn)
       }
     } else {
-      if (registeredKeys && localShortcut.isRegistered(window, registeredKeys)) {
+      if (
+        registeredKeys &&
+        localShortcut.isRegistered(window, registeredKeys)
+      ) {
         localShortcut.unregister(window, registeredKeys)
       }
 

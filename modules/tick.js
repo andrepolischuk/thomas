@@ -6,11 +6,11 @@ module.exports = function tick ({state}) {
   }
 
   const currentTime = Date.now()
-  const diff = state.timer.prevTime ? (currentTime - state.timer.prevTime) : 0
+  const diff = state.timer.prevTime ? currentTime - state.timer.prevTime : 0
 
   let timeout = 1e3 - (diff % 1e3)
 
-  if (timeout < (1e3 / 2.0)) {
+  if (timeout < 1e3 / 2.0) {
     timeout += 1e3
   }
 

@@ -65,7 +65,9 @@ module.exports = function createWindow () {
       }
 
       if (remainingTime > 0 && stage === 'interval' && progressBar) {
-        window.setProgressBar(1 - (remainingTime / data.state.settings.duration / 6e4))
+        window.setProgressBar(
+          1 - remainingTime / data.state.settings.duration / 6e4
+        )
       }
 
       if (remainingTime <= 0 && (stage === 'interval' || stage === 'break')) {
@@ -96,10 +98,7 @@ module.exports = function createWindow () {
     const {stage} = data.state.timer
     const {trayIcon, progressBar} = data.state.settings
 
-    settings.setAll(
-      normalizeSettings(data.state.settings),
-      {prettify: true}
-    )
+    settings.setAll(normalizeSettings(data.state.settings), {prettify: true})
 
     if (!tray && trayIcon) {
       tray = new Tray(stageIcon(stage))

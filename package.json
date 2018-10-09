@@ -12,14 +12,16 @@
     "modules"
   ],
   "scripts": {
-    "test": "standard",
     "start": "electron .",
+    "lint": "standard",
+    "format": "prettier --write '**/*.js' && standard --fix",
     "pack": "electron-builder --dir",
     "dist": "npm run dist:mac && npm run dist:linux && npm run dist:win",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux",
     "dist:win": "electron-builder --win",
     "postinstall": "electron-builder install-app-deps",
+    "precommit": "lint-staged",
     "postversion": "git push --follow-tags"
   },
   "repository": {
@@ -51,6 +53,9 @@
   "devDependencies": {
     "electron": "^1.8.4",
     "electron-builder": "^20.0.6",
+    "husky": "^1.1.1",
+    "lint-staged": "^7.3.0",
+    "prettier": "^1.14.3",
     "standard": "^10.0.2"
   },
   "build": {
@@ -91,5 +96,18 @@
         "nsis"
       ]
     }
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "jsxBracketSameLine": true
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "standard --fix",
+      "git add"
+    ]
   }
 }
