@@ -36,14 +36,6 @@ If you use Ubuntu or Debian, you also may need to install `nodejs-legacy` that c
 sudo apt-get install nodejs-legacy
 ```
 
-You can pack application for specified platform:
-
-```sh
-npm run dist:macos
-npm run dist:linux
-npm run dist:windows
-```
-
 ## License
 
 MIT

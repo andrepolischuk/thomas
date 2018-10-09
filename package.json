@@ -6,7 +6,7 @@
   "electronVersion": "0.36.0",
   "main": "app/index.js",
   "files": [
-    "assets",
+    "build",
     "app",
     "lib",
     "modules"
@@ -14,10 +14,13 @@
   "scripts": {
     "test": "standard",
     "start": "electron .",
-    "dist": "npm run dist:macos && npm run dist:linux && npm run dist:windows",
-    "dist:macos": "electron-packager . --overwrite --asar --out=dist --ignore='^/(dist|media)$' --platform=darwin --arch=x64 --icon=assets/icon.icns --app-bundle-id=com.andrepolischuk.thomas && cd dist/Thomas-darwin-x64 && zip -ryXq9 ../Thomas-macos-${npm_package_version}.zip Thomas.app",
-    "dist:linux": "electron-packager . --overwrite --out=dist --ignore='^/(dist|media)$' --platform=linux --arch=x64 --icon=assets/icon.png --app-bundle-id=com.andrepolischuk.thomas && cd dist/Thomas-linux-x64 && zip -ryq9 ../Thomas-linux-${npm_package_version}.zip *",
-    "dist:windows": "electron-packager . --overwrite --asar --out=dist --ignore='^/(dist|media)$' --platform=win32 --arch=ia32 --icon=assets/icon.ico --version-string.ProductName=$npm_package_productName && cd dist/Thomas-win32-ia32 && zip -ryq9 ../Thomas-windows-${npm_package_version}.zip *"
+    "pack": "electron-builder --dir",
+    "dist": "npm run dist:mac && npm run dist:linux && npm run dist:win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux",
+    "dist:win": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps",
+    "postversion": "git push --follow-tags"
   },
   "repository": {
     "type": "git",
@@ -42,11 +45,51 @@
     "electron-debug": "^1.0.1",
     "electron-localshortcut": "^1.1.1",
     "electron-settings": "^3.1.4",
+    "electron-updater": "^2.20.1",
     "nanomorph": "^5.0.0"
   },
   "devDependencies": {
     "electron": "^1.8.4",
-    "electron-packager": "^8.7.0",
+    "electron-builder": "^20.0.6",
     "standard": "^10.0.2"
+  },
+  "build": {
+    "appId": "com.andrepolischuk.thomas",
+    "files": [
+      "**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "dmg": {
+      "iconSize": 160,
+      "contents": [
+        {
+          "x": 180,
+          "y": 170
+        },
+        {
+          "x": 480,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
   }
 }

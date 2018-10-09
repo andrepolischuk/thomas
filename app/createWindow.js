@@ -2,6 +2,7 @@
 const syncData = require('dact-electron')
 const {app, ipcMain, BrowserWindow, Menu, Tray} = require('electron')
 const {join} = require('path')
+// const {autoUpdater} = require('electron-updater')
 const stageIcon = require('./stageIcon')
 const menuTemplate = require('./menuTemplate')
 const updateShortcuts = require('./updateShortcuts')
@@ -23,7 +24,7 @@ module.exports = function createWindow () {
   const window = new BrowserWindow({
     width: 300,
     height: 300,
-    icon: `file://${root}/assets/icon.png`,
+    icon: `file://${root}/build/icon.png`,
     show: false,
     resizable: false,
     fullscreenable: false,
@@ -47,6 +48,10 @@ module.exports = function createWindow () {
   const keyboardCallbacks = createKeyboardCallbacks(window, data)
 
   Menu.setApplicationMenu(menu)
+
+  // if (process.platform !== 'linux') {
+  //   autoUpdater.checkForUpdatesAndNotify()
+  // }
 
   data.subscribe('timer', () => {
     const {stage, timeout} = data.state.timer
