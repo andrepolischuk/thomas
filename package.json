@@ -18,7 +18,9 @@
     "dist": "npm run dist:mac && npm run dist:linux && npm run dist:win",
     "dist:mac": "electron-builder --mac",
     "dist:linux": "electron-builder --linux",
-    "dist:win": "electron-builder --win"
+    "dist:win": "electron-builder --win",
+    "postinstall": "electron-builder install-app-deps",
+    "postversion": "git push --follow-tags"
   },
   "repository": {
     "type": "git",
