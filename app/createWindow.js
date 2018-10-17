@@ -30,7 +30,7 @@ module.exports = function createWindow () {
     fullscreenable: false,
     backgroundColor: '#ffffff',
     title: 'Thomas',
-    titleBarStyle: 'hidden-inset'
+    titleBarStyle: 'hiddenInset'
   })
 
   window.loadURL(`file://${root}/lib/index.html`)
