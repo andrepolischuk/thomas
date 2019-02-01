@@ -1,8 +1,8 @@
 os: osx
-osx_image: xcode9.1
+osx_image: xcode10
 language: node_js
 node_js:
-  - 8
+  - 10
 script:
 - npm run lint
 - npm run dist
