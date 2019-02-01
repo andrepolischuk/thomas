@@ -1,6 +1,13 @@
 'use strict'
 const syncData = require('dact-electron')
-const {app, ipcMain, BrowserWindow, Menu, Tray} = require('electron')
+const {
+  app,
+  ipcMain,
+  BrowserWindow,
+  Menu,
+  Tray,
+  systemPreferences
+} = require('electron')
 const {join} = require('path')
 // const {autoUpdater} = require('electron-updater')
 const stageIcon = require('./stageIcon')
@@ -17,6 +24,8 @@ const finish = require('../modules/finish')
 
 module.exports = function createWindow () {
   const root = join(__dirname, '..')
+  const darkMode =
+    process.platform === 'darwin' && systemPreferences.isDarkMode()
   let tray
   let lastStage
   let hideTimeout
@@ -28,12 +37,14 @@ module.exports = function createWindow () {
     show: false,
     resizable: false,
     fullscreenable: false,
-    backgroundColor: '#ffffff',
+    backgroundColor: darkMode ? '#28292b' : 'white',
     title: 'Thomas',
     titleBarStyle: 'hiddenInset'
   })
 
-  window.loadURL(`file://${root}/lib/index.html`)
+  window.loadURL(
+    `file://${root}/lib/index.html?theme=${darkMode ? 'dark' : 'light'}`
+  )
 
   window.hideAll = () => {
     if (process.platform === 'darwin') {
@@ -126,6 +137,17 @@ module.exports = function createWindow () {
   data.subscribe('keyboardEvents', () => {
     updateShortcuts(window, data.state, keyboardCallbacks)
   })
+
+  if (process.platform === 'darwin') {
+    systemPreferences.subscribeNotification(
+      'AppleInterfaceThemeChangedNotification',
+      () => {
+        window.webContents.send('settings:update', {
+          theme: systemPreferences.isDarkMode() ? 'dark' : 'light'
+        })
+      }
+    )
+  }
 
   window.once('ready-to-show', () => {
     window.show()

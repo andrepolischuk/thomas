@@ -1,7 +1,19 @@
 :root {
+  --background: white;
+  --alpha: rgba(255, 255, 255, 0.9);
+  --nav: rgba(0, 0, 0, 0.3);
   --main: #28292b;
   --accent: #32b67a;
   --additional: #f4f4f4;
+}
+
+:root[data-theme="dark"] {
+  --background: #28292b;
+  --alpha: rgba(40, 41, 43, 0.9);
+  --nav: rgba(255, 255, 255, 0.3);
+  --main: #f4f4f4;
+  --accent: #32b67a;
+  --additional: #393a3c;
 }
 
 * {
@@ -19,7 +31,7 @@ body {
 
 body {
   margin: 0;
-  background-color: white;
+  background-color: var(--background);
   color: var(--main);
   font-size: 1rem;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -114,6 +126,7 @@ input {
   padding: 0 10px;
   height: 40px;
   background-color: transparent;
+  color: var(--main);
   font-size: 1rem;
   text-align: center;
   transition: border 100ms, background 100ms;
@@ -192,7 +205,7 @@ nav {
   justify-content: flex-end;
   align-items: center;
   padding: 10px;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9) 80%, transparent);
+  background-image: linear-gradient(to bottom, var(--alpha), var(--alpha) 80%, transparent);
   line-height: 1rem;
   -webkit-app-region: drag;
 }
@@ -210,5 +223,5 @@ nav button {
 }
 
 nav button[aria-selected="false"] {
-  color: rgba(0, 0, 0, 0.3);
+  color: var(--nav);
 }
