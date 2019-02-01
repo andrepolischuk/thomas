@@ -24,8 +24,13 @@ const finish = require('../modules/finish')
 
 module.exports = function createWindow () {
   const root = join(__dirname, '..')
+  const appSettings = settings.getAll()
+
   const darkMode =
-    process.platform === 'darwin' && systemPreferences.isDarkMode()
+    process.platform === 'darwin' && appSettings.followSystemAppearance
+      ? systemPreferences.isDarkMode()
+      : appSettings.darkMode
+
   let tray
   let lastStage
   let hideTimeout
@@ -42,9 +47,7 @@ module.exports = function createWindow () {
     titleBarStyle: 'hiddenInset'
   })
 
-  window.loadURL(
-    `file://${root}/lib/index.html?theme=${darkMode ? 'dark' : 'light'}`
-  )
+  window.loadURL(`file://${root}/lib/index.html?darkMode=${darkMode}`)
 
   window.hideAll = () => {
     if (process.platform === 'darwin') {
@@ -142,8 +145,8 @@ module.exports = function createWindow () {
     systemPreferences.subscribeNotification(
       'AppleInterfaceThemeChangedNotification',
       () => {
-        window.webContents.send('settings:update', {
-          theme: systemPreferences.isDarkMode() ? 'dark' : 'light'
+        window.webContents.send('system:preferences', {
+          darkMode: systemPreferences.isDarkMode()
         })
       }
     )

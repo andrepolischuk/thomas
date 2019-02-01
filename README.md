@@ -14,6 +14,7 @@
 * Built-in configurable keyboard shortcuts
 * Minimal log that contains all completed intervals counts per day
 * Tray icon and progress bar
+* Dark mode, supports automatically macOS Mojave appearance
 
 ### Shortcuts
 

@@ -7,7 +7,7 @@
   --additional: #f4f4f4;
 }
 
-:root[data-theme="dark"] {
+:root[data-dark-mode="true"] {
   --background: #28292b;
   --alpha: rgba(40, 41, 43, 0.9);
   --nav: rgba(255, 255, 255, 0.3);
@@ -85,6 +85,7 @@ li {
 
 li :first-child {
   font-size: 0.85rem;
+  white-space: normal;
 }
 
 li h5 {
