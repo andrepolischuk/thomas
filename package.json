@@ -68,7 +68,8 @@
       "target": [
         "dmg",
         "zip"
-      ]
+      ],
+      "darkModeSupport": true
     },
     "dmg": {
       "iconSize": 160,
