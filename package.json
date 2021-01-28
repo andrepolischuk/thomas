@@ -50,7 +50,7 @@
     "nanomorph": "^5.0.0"
   },
   "devDependencies": {
-    "electron": "^4.0.3",
+    "electron": "^9.4.0",
     "electron-builder": "^20.38.5",
     "electron-updater": "^4.0.6",
     "husky": "^1.1.1",
