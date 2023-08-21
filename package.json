@@ -21,7 +21,6 @@
     "dist:linux": "electron-builder --linux",
     "dist:win": "electron-builder --win",
     "postinstall": "electron-builder install-app-deps",
-    "precommit": "lint-staged",
     "postversion": "git push --follow-tags"
   },
   "repository": {
@@ -111,5 +110,10 @@
       "standard --fix",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
