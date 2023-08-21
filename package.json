@@ -1,7 +1,7 @@
 {
   "name": "thomas",
   "productName": "Thomas",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Simple pomodoro timer",
   "electronVersion": "0.36.0",
   "main": "app/index.js",
