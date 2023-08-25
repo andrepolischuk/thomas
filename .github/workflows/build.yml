@@ -1,58 +1,31 @@
-name: Build
+name: Build/release
 
-on:
-  push:
-    branches:
-      - main
+on: push
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Check out Git repository
+        uses: actions/checkout@v1
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14' # Use a versão do Node.js que seu projeto requer
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.github_token }}
 
-    - name: Build for Windows
-      run: npm run dist:win
-
-    - name: Build for Linux
-      run: npm run dist:linux
-
-    - name: Upload Builds
-      uses: actions/upload-artifact@v2
-      with:
-        name: builds
-        path: |
-          build/*.exe
-          build/*.AppImage
-          # Adicione outras extensões de build que você deseja incluir
-
-    - name: Setup macOS Build Environment
-      uses: actions/checkout@v2
-      with:
-        repository: actions/virtual-environments
-        path: .github/macOS
-        ref: 19b69b5
-
-    - name: Build for macOS
-      run: |
-        cp -R .github/macOS/ $HOME/.github
-        chmod +x $HOME/.github/macOS/bin/install.sh
-        $HOME/.github/macOS/bin/install.sh
-        npm install
-        npm run dist:mac
-
-    - name: Upload macOS Build
-      uses: actions/upload-artifact@v2
-      with:
-        name: mac-build
-        path: dist/*.dmg # Verifique o local correto dos arquivos de build
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
