@@ -1,31 +1,38 @@
-name: Build/release
+name: Test
 
-on: push
+on:
+  - push
+  - pull_request
 
 jobs:
-  release:
+  test:
+    name: Test
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
+        package_manager: [npm, yarn]
+        package_root: ["./test/app-in-root/", "./test/app-in-subdirectory/", "./test/vue-app"]
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
-      - name: Install Node.js, NPM and Yarn
+      - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 10
+          node-version: 12
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Install test app dependencies
+        run: |
+          cd ${{ matrix.package_root }}
+          ${{ matrix.package_manager }} install
+
+      - name: Run action
+        uses: ./
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          package_root: ${{ matrix.package_root }}
+          use_vue_cli: ${{ contains(matrix.package_root, 'vue')}}
+          max_attempts: "2"
