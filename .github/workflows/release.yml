@@ -5,44 +5,20 @@ on:
       - created
 
 jobs:
+  release:
+    runs-on: ${{ matrix.os }}
 
-  publish_on_linux:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
     steps:
     - uses: actions/checkout@v2       
     - uses: actions/setup-node@master
       with:
         node-version: 14
     - name: install dependencies
-      run: npm ci
-    - name: publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npm run publish
-
-  publish_on_mac:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@master
-      with:
-        node-version: 14
-    - name: install dependencies
-      run: npm ci
-    - name: publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npm run publish
-
-  publish_on_win:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2       
-    - uses: actions/setup-node@master
-      with:
-        node-version: 14
-    - name: install dependencies
-      run: npm ci
+      run: npm install
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
