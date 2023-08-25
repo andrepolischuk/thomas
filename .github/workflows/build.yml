@@ -10,45 +10,49 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Setup Node.js
+    - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 18
+        node-version: '14' # Use a versão do Node.js que seu projeto requer
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: npm install
+
+    - name: Build for Windows
+      run: npm run dist:win
 
     - name: Build for Linux
       run: npm run dist:linux
 
-    - name: Upload Linux artifact
+    - name: Upload Builds
       uses: actions/upload-artifact@v2
       with:
-        name: linux-build
-        path: dist
+        name: builds
+        path: |
+          build/*.exe
+          build/*.AppImage
+          # Adicione outras extensões de build que você deseja incluir
+
+    - name: Setup macOS Build Environment
+      uses: actions/checkout@v2
+      with:
+        repository: actions/virtual-environments
+        path: .github/macOS
+        ref: 19b69b5
 
     - name: Build for macOS
-      runs-on: macos-latest
-      steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      run: |
+        cp -R .github/macOS/ $HOME/.github
+        chmod +x $HOME/.github/macOS/bin/install.sh
+        $HOME/.github/macOS/bin/install.sh
+        npm install
+        npm run dist:mac
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build for macOS
-        run: npm run dist:mac
-
-      - name: Upload macOS artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: mac-build
-          path: dist
+    - name: Upload macOS Build
+      uses: actions/upload-artifact@v2
+      with:
+        name: mac-build
+        path: dist/*.dmg # Verifique o local correto dos arquivos de build
