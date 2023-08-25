@@ -59,6 +59,7 @@
   },
   "build": {
     "appId": "com.andrepolischuk.thomas",
+    "publish": "always",
     "files": [
       "**/*"
     ],
