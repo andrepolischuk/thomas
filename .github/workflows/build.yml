@@ -1,38 +1,39 @@
-name: Test
-
-on:
-  - push
-  - pull_request
+name: Build
+on: [push, pull_request]
 
 jobs:
-  test:
-    name: Test
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-        package_manager: [npm, yarn]
-        package_root: ["./test/app-in-root/", "./test/app-in-subdirectory/", "./test/vue-app"]
-
+  build_on_linux:
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@master
+      with:
+        node-version: 14
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm run dist:linux
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
+  build_on_mac:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@master
+      with:
+        node-version: 14
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm run dist:mac
 
-      - name: Install test app dependencies
-        run: |
-          cd ${{ matrix.package_root }}
-          ${{ matrix.package_manager }} install
-
-      - name: Run action
-        uses: ./
-        with:
-          github_token: ${{ secrets.github_token }}
-          package_root: ${{ matrix.package_root }}
-          use_vue_cli: ${{ contains(matrix.package_root, 'vue')}}
-          max_attempts: "2"
+  build_on_win:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@master
+      with:
+        node-version: 14
+    - name: install dependencies
+      run: npm install
+    - name: build
+      run: npm dist:win
