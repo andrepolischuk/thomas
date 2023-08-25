@@ -14,7 +14,7 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: npm install
+      run: npm ci
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: npm install
+      run: npm ci
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,7 +42,7 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: npm install
+      run: npm ci
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

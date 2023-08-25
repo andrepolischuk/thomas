@@ -36,7 +36,8 @@
             "repository": {
               "owner": "isyuricunha",
               "name": "thomas"
-            }
+            },
+            "draft": true
           }
         }
       ]
